@@ -42,9 +42,7 @@ const RegForm = () => {
 
   const onSubmit = (data) => {
     dispatch(handleRegister(data));
-    setTimeout(() => {
-      router.push("/");
-    }, 1500);
+
   };
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-5 ">

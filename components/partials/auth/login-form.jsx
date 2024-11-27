@@ -19,13 +19,6 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  useEffect(()=>{
-
-    router.push("/analytics")
-
-
-  },[])
-
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
     mode: "all",
@@ -33,6 +26,7 @@ const LoginForm = () => {
 
 
   const onSubmit = async (data) => {
+    router.push("/analytics")
     if (!data.email || !data.password) {
       toast.error("Informations invalides", {
         position: "top-right",
@@ -49,13 +43,12 @@ const LoginForm = () => {
 
     
       //const result = await loginUser(data.email, data.password);
-      
+      router.push("/analytics")
      
   };
 
   return (
-
-
+    
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <Textinput
         name="email"

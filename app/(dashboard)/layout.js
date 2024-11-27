@@ -37,9 +37,7 @@ export default function RootLayout({ children }) {
   const { isAuth } = useSelector((state) => state.auth);
 
   useEffect(() => {
-    if (!isAuth) {
-      router.push("/");
-    }
+
     //darkMode;
   }, [isAuth]);
   const location = usePathname();
