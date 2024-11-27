@@ -1,4 +1,4 @@
-import React from "react";
+import {useEffect} from "react";
 import Textinput from "@/components/ui/Textinput";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -18,6 +18,13 @@ const schema = yup
 const LoginForm = () => {
   const dispatch = useDispatch();
   const router = useRouter();
+
+  useEffect(()=>{
+
+    router.push("/analytics")
+
+
+  },[])
 
   const { register, handleSubmit, formState: { errors } } = useForm({
     resolver: yupResolver(schema),
@@ -42,11 +49,13 @@ const LoginForm = () => {
 
     
       //const result = await loginUser(data.email, data.password);
-      router.push("/analytics")
+      
      
   };
 
   return (
+
+
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <Textinput
         name="email"
