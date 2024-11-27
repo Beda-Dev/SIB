@@ -40,35 +40,10 @@ const LoginForm = () => {
       return;
     }
 
-    try {
-      const result = await loginUser(data.email, data.password);
+    
+      //const result = await loginUser(data.email, data.password);
       router.push("/analytics")
-      if (result.success) {
-        dispatch({ type: "LOGIN", payload: result.user });
-      } else {
-        toast.error(result.message || "Échec de la connexion", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "light",
-        });
-      }
-    } catch (error) {
-      toast.error("Une erreur est survenue lors de la connexion", {
-        position: "top-right",
-        autoClose: 1500,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-        progress: undefined,
-        theme: "light",
-      });
-    }
+     
   };
 
   return (
