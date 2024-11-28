@@ -14,22 +14,7 @@ export const menuItems = [
         childtitle: "Analytics Dashboard",
         childlink: "analytics",
       },
-      {
-        childtitle: "Ecommerce Dashboard",
-        childlink: "ecommerce",
-      },
-      {
-        childtitle: "Project  Dashbaord",
-        childlink: "project",
-      },
-      {
-        childtitle: " CRM Dashbaord",
-        childlink: "crm",
-      },
-      {
-        childtitle: "Banking Dashboard",
-        childlink: "banking",
-      },
+
     ],
   },
 
@@ -39,39 +24,20 @@ export const menuItems = [
   },
 
   {
-    title: "Produit",
-    isHide: true,
-    icon: "carbon:product",
-    link: "chat",
-  },
-
-  {
     title: "Categorie-produit",
     isHide: true,
     icon: "carbon:category",
-    link: "email",
-  },
-
-/*   {
-    title: "Kanban",
-    isHide: true,
-    icon: "heroicons-outline:view-boards",
-    link: "kanban",
-  },
-  {
-    title: "Calender",
-    isHide: true,
-    icon: "heroicons-outline:calendar",
-    link: "calender",
+    link: "categorieProduit",
   },
 
   {
-    title: "Todo",
+    title: "Produit",
     isHide: true,
-    icon: "heroicons-outline:clipboard-check",
-    link: "todo",
+    icon: "carbon:product",
+    link: "Produit",
   },
-*/
+
+
   {
     title: "Projects",
     icon: "heroicons-outline:document",

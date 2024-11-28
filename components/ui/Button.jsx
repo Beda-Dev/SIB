@@ -1,17 +1,18 @@
 import React from "react";
 import Icon from "@/components/ui/Icon";
 import Link from "next/link";
+
 function Button({
   text,
   type = "button",
   isLoading,
   disabled,
-  className = "bg-primary-500 text-white",
+  className = "bg-primary-500 text-white p-0.5 text-sm", // Réduit le padding et la taille du texte
   children,
   icon,
   loadingClass = "unset-classname",
   iconPosition = "left",
-  iconClass = "text-[20px]",
+  iconClass = "text-[16px]", // Réduit la taille de l'icône
   link,
   onClick,
   div,
@@ -22,41 +23,23 @@ function Button({
         <button
           type={type}
           onClick={onClick}
-          className={`btn btn inline-flex justify-center   ${
-            isLoading ? " pointer-events-none" : ""
-          }
-        ${disabled ? " opacity-40 cursor-not-allowed" : ""}
-        ${className}`}
+          className={`btn btn inline-flex justify-center ${isLoading ? " pointer-events-none" : ""} ${disabled ? " opacity-40 cursor-not-allowed" : ""} ${className}`}
         >
-          {/* if has children and not loading*/}
           {children && !isLoading && children}
-
-          {/* if no children and  loading*/}
           {!children && !isLoading && (
             <span className="flex items-center">
-              {/* if has icon */}
               {icon && (
-                <span
-                  className={`
-          ${iconPosition === "right" ? "order-1 ltr:ml-2 rtl:mr-2" : " "}
-          ${text && iconPosition === "left" ? "ltr:mr-2 rtl:ml-2" : ""}
-          
-          ${iconClass}
-          
-          `}
-                >
+                <span className={` ${iconPosition === "right" ? "order-1 ltr:ml-2 rtl:mr-2" : ""} ${text && iconPosition === "left" ? "ltr:mr-2 rtl:ml-2" : ""} ${iconClass}`}>
                   <Icon icon={icon} />
                 </span>
               )}
               <span>{text}</span>
             </span>
           )}
-
-          {/* if loading*/}
           {isLoading && (
             <>
               <svg
-                className={`animate-spin ltr:-ml-1 ltr:mr-3 rtl:-mr-1 rtl:ml-3 h-5 w-5 ${loadingClass}`}
+                className={`animate-spin ltr:-ml-1 ltr:mr-3 rtl:-mr-1 rtl:ml-3 h-4 w-4 ${loadingClass}`} // Réduit la taille du loader
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -83,41 +66,23 @@ function Button({
       {!link && div && (
         <div
           onClick={onClick}
-          className={`btn btn inline-flex justify-center   ${
-            isLoading ? " pointer-events-none" : ""
-          }
-        ${disabled ? " opacity-40 cursor-not-allowed" : ""}
-        ${className}`}
+          className={`btn btn inline-flex justify-center ${isLoading ? " pointer-events-none" : ""} ${disabled ? " opacity-40 cursor-not-allowed" : ""} ${className}`}
         >
-          {/* if has children and not loading*/}
           {children && !isLoading && children}
-
-          {/* if no children and  loading*/}
           {!children && !isLoading && (
             <span className="flex items-center">
-              {/* if has icon */}
               {icon && (
-                <span
-                  className={`
-          ${iconPosition === "right" ? "order-1 ltr:ml-2 rtl:mr-2" : " "}
-          ${text && iconPosition === "left" ? "ltr:mr-2 rtl:ml-2" : ""}
-          
-          ${iconClass}
-          
-          `}
-                >
+                <span className={` ${iconPosition === "right" ? "order-1 ltr:ml-2 rtl:mr-2" : ""} ${text && iconPosition === "left" ? "ltr:mr-2 rtl:ml-2" : ""} ${iconClass}`}>
                   <Icon icon={icon} />
                 </span>
               )}
               <span>{text}</span>
             </span>
           )}
-
-          {/* if loading*/}
           {isLoading && (
             <>
               <svg
-                className={`animate-spin ltr:-ml-1 ltr:mr-3 rtl:-mr-1 rtl:ml-3 h-5 w-5 ${loadingClass}`}
+                className={`animate-spin ltr:-ml-1 ltr:mr-3 rtl:-mr-1 rtl:ml-3 h-4 w-4 ${loadingClass}`} // Réduit la taille du loader
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"
@@ -144,41 +109,23 @@ function Button({
       {link && !div && (
         <Link
           href={link}
-          className={`btn btn inline-flex justify-center   ${
-            isLoading ? " pointer-events-none" : ""
-          }
-        ${disabled ? " opacity-40 cursor-not-allowed" : ""}
-        ${className}`}
+          className={`btn btn inline-flex justify-center ${isLoading ? " pointer-events-none" : ""} ${disabled ? " opacity-40 cursor-not-allowed" : ""} ${className}`}
         >
-          {/* if has children and not loading*/}
           {children && !isLoading && children}
-
-          {/* if no children and  loading*/}
           {!children && !isLoading && (
             <span className="flex items-center">
-              {/* if has icon */}
               {icon && (
-                <span
-                  className={`
-          ${iconPosition === "right" ? "order-1 ltr:ml-2 rtl:mr-2" : " "}
-          ${text && iconPosition === "left" ? "ltr:mr-2 rtl:ml-2" : ""}
-          
-          ${iconClass}
-          
-          `}
-                >
+                <span className={` ${iconPosition === "right" ? "order-1 ltr:ml-2 rtl:mr-2" : ""} ${text && iconPosition === "left" ? "ltr:mr-2 rtl:ml-2" : ""} ${iconClass}`}>
                   <Icon icon={icon} />
                 </span>
               )}
               <span>{text}</span>
             </span>
           )}
-
-          {/* if loading*/}
           {isLoading && (
             <>
               <svg
-                className={`animate-spin ltr:-ml-1 ltr:mr-3 rtl:-mr-1 rtl:ml-3 h-5 w-5 ${loadingClass}`}
+                className={`animate-spin ltr:-ml-1 ltr:mr-3 rtl:-mr-1 rtl:ml-3 h-4 w-4 ${loadingClass}`} // Réduit la taille du loader
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
                 viewBox="0 0 24 24"

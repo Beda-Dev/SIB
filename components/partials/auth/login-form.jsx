@@ -1,4 +1,4 @@
-import {useEffect} from "react";
+
 import Textinput from "@/components/ui/Textinput";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -7,6 +7,7 @@ import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
 import { loginUser } from "./Login"
+import { setUser } from "@/store/userReducer"
 
 const schema = yup
   .object({
@@ -26,7 +27,14 @@ const LoginForm = () => {
 
 
   const onSubmit = async (data) => {
-    router.push("/analytics")
+
+    const result = await loginUser(data.email, data.password);
+    if (result.success) {
+        dispatch(setUser(result.data));
+        router.push("/analytics");
+    } else {
+        toast.error("Échec de la connexion");
+    }
     if (!data.email || !data.password) {
       toast.error("Informations invalides", {
         position: "top-right",
@@ -41,9 +49,9 @@ const LoginForm = () => {
       return;
     }
 
+
     
-      //const result = await loginUser(data.email, data.password);
-      router.push("/analytics")
+      
      
   };
 
@@ -65,7 +73,7 @@ const LoginForm = () => {
         error={errors?.password}
       />
 
-      <button className="btn btn-warning block w-full text-center">Se connecter</button>
+      <button className="btn btn-warning bg-orange-500 block w-full text-center">Se connecter</button>
     </form>
   );
 };

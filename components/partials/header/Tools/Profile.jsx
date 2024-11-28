@@ -7,6 +7,9 @@ import { handleLogout } from "@/components/partials/auth/store";
 import { useRouter } from "next/navigation";
 
 const ProfileLabel = () => {
+
+  //const user = useSelector((state) => state.user.user);
+  //console.log(user)
   return (
     <div className="flex items-center">
       <div className="flex-1 ltr:mr-[10px] rtl:ml-[10px]">
@@ -20,7 +23,7 @@ const ProfileLabel = () => {
       </div>
       <div className="flex-none text-slate-600 dark:text-white text-sm font-normal items-center lg:flex hidden overflow-hidden text-ellipsis whitespace-nowrap">
         <span className="overflow-hidden text-ellipsis whitespace-nowrap w-[85px] block">
-          Albert Flores
+          beda
         </span>
         <span className="text-base inline-block ltr:ml-[10px] rtl:mr-[10px]">
           <Icon icon="heroicons-outline:chevron-down"></Icon>
@@ -43,27 +46,8 @@ const Profile = () => {
         router.push("/profile");
       },
     },
-    {
-      label: "Chat",
-      icon: "heroicons-outline:chat",
-      action: () => {
-        router.push("/chat");
-      },
-    },
-    {
-      label: "Email",
-      icon: "heroicons-outline:mail",
-      action: () => {
-        router.push("email");
-      },
-    },
-    {
-      label: "Todo",
-      icon: "heroicons-outline:clipboard-check",
-      action: () => {
-        router.push("/todo");
-      },
-    },
+
+
     {
       label: "Settings",
       icon: "heroicons-outline:cog",
@@ -71,20 +55,8 @@ const Profile = () => {
         router.push("/settings");
       },
     },
-    {
-      label: "Price",
-      icon: "heroicons-outline:credit-card",
-      action: () => {
-        router.push("/pricing");
-      },
-    },
-    {
-      label: "Faq",
-      icon: "heroicons-outline:information-circle",
-      action: () => {
-        router.push("/faq");
-      },
-    },
+
+
     {
       label: "Logout",
       icon: "heroicons-outline:login",

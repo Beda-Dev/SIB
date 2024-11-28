@@ -9,7 +9,7 @@ const themeConfig = {
     darkMode: false,
     semiDarkMode: false,
     skin: "default",
-    contentWidth: "full",
+    contentWidth: "boxed",
     type: "vertical",
     navBarType: "sticky",
     footerType: "static",

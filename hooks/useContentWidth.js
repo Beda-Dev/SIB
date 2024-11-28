@@ -6,7 +6,7 @@ const useContentWidth = () => {
   const contentWidth = useSelector((state) => state.layout.contentWidth);
 
   // ** Toggles Content Width
-  const setContentWidth = (val) => dispatch(handleContentWidth(val));
+  const setContentWidth = () => dispatch(handleContentWidth("boxed"));
 
   return [contentWidth, setContentWidth];
 };

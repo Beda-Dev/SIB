@@ -6,8 +6,10 @@ import project from "@/components/partials/app/projects/store";
 import kanban from "@/components/partials/app/kanban/store";
 import calendar from "@/components/partials/app/calender/store";
 import auth from "@/components/partials/auth/store";
+import user from "./userReducer";
 
 const rootReducer = {
+  user,
   layout,
   todo,
   email,
@@ -16,5 +18,6 @@ const rootReducer = {
   kanban,
   calendar,
   auth,
+  
 };
 export default rootReducer;
