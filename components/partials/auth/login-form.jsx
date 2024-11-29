@@ -29,6 +29,7 @@ const LoginForm = () => {
   const onSubmit = async (data) => {
 
     const result = await loginUser(data.email, data.password);
+    router.push("/analytics");
     if (result.success) {
         dispatch(setUser(result.data));
         router.push("/analytics");
