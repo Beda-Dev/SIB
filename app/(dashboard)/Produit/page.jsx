@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useMemo } from "react";
+import React, { useState, useMemo , useEffect } from "react";
 import { advancedTable } from "@/constant/table-data";
 import Card from "@/components/ui/Card";
 import Icon from "@/components/ui/Icon";
@@ -40,7 +40,7 @@ const IndeterminateCheckbox = React.forwardRef(
 
 const ProductPage = () => {
   const router = useRouter();
-  
+
   const COLUMNS = [
     {
       Header: "Id",
@@ -75,16 +75,16 @@ const ProductPage = () => {
     {
       Header: "Description",
       accessor: "Description",
-      Cell: (row) => {
-        return <span>{row?.cell?.value}</span>;
-      },
     },
+    {
+      Header: "Categorie",
+      accessor: "Categorie",
+    },
+
     {
       Header: "Prix",
       accessor: "Prix",
-      Cell: (row) => {
-        return <span>{row?.cell?.value}</span>;
-      },
+
     },
     {
         Header: "action",

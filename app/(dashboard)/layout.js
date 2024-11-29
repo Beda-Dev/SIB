@@ -68,8 +68,8 @@ export default function RootLayout({ children }) {
       `}
     >
       <ToastContainer />
-      <Header className={width > breakpoints.xl ? switchHeaderClass() : ""} />
-      {menuType === "vertical" && width > breakpoints.xl && !menuHidden && (
+      <Header className={width > breakpoints.lg ? switchHeaderClass() : ""} />
+      {menuType === "vertical" && width > breakpoints.lg && !menuHidden && (
         <Sidebar />
       )}
       <MobileMenu

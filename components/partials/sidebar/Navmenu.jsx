@@ -1,7 +1,6 @@
 import { useRouter, usePathname } from "next/navigation";
 import React, { useEffect, useState } from "react";
 import Link from "next/link";
-import { Collapse } from "react-collapse";
 import Icon from "@/components/ui/Icon";
 import { toggleActiveChat } from "@/components/partials/app/chat/store";
 import { useDispatch } from "react-redux";
@@ -109,18 +108,7 @@ const Navmenu = ({ menus }) => {
             />
           </li>
         ))}
-        <li className="single-sidebar-menu">
-          <a
-            href="https://dashcode-react-doc.codeshaper.tech/"
-            target="_blank"
-            className="menu-link"
-          >
-            <span className="menu-icon">
-              <Icon icon="heroicons:document" />
-            </span>
-            <div className="text-box">Documentation</div>
-          </a>
-        </li>
+
       </ul>
     </>
   );

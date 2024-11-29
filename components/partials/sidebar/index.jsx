@@ -35,7 +35,7 @@ const Sidebar = () => {
         className={`sidebar-wrapper bg-white dark:bg-slate-800     ${
           collapsed ? "w-[72px] close_sidebar" : "w-[248px]"
         }
-      ${menuHover ? "sidebar-hovered" : ""}
+      sidebar-hovered
       ${
         skin === "bordered"
           ? "border-r border-slate-200 dark:border-slate-700"

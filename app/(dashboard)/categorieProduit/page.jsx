@@ -46,6 +46,7 @@ const ProductPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false); // État pour afficher ou non la modale
   const [categoryName, setCategoryName] = useState(""); // État pour la valeur de l'input
   const [arraydata , SetArraydata] = useState([])
+  const [isLoading, setIsLoading] = useState(true);
 
   // Ouvrir la modale
   const handleOpenModal = () => {
@@ -70,11 +71,13 @@ const ProductPage = () => {
   };
   useEffect(()=>{
     const getData =async()=>{
+      setIsLoading(true);
       const Data = await Recherche();
       if(Data){
-        console.log(Data);
-        SetArraydata(Data)
+        SetArraydata(Data['data']['data'])
+       
       }
+      setIsLoading(false);
     }
 
     getData()
@@ -87,25 +90,17 @@ const ProductPage = () => {
     {
       Header: "Id",
       accessor: "id",
-      Cell: (row) => {
-        return <span>{row?.cell?.value}</span>;
-      },
     },
-
     {
       Header: "Libellé",
       accessor: "label",
-      Cell: (row) => {
-        return (
-          <div>
-            <span className="inline-flex items-center">
-              <span className="text-sm text-slate-600 dark:text-slate-300 capitalize">
-                {arraydata[0]?.label}
-              </span>
-            </span>
-          </div>
-        );
-      },
+    },
+    {
+      Header: "Créé le",
+      accessor: "createdAt",
+      Cell: ({ value }) => {
+        const formattedDate = new Date(value).toLocaleDateString("fr-FR");
+        return <span>{formattedDate}</span>;}
     },
 
     {
@@ -142,7 +137,7 @@ const ProductPage = () => {
   ];
 
   const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => advancedTable, []);
+  const data = useMemo(() => arraydata, [arraydata]);
 
   const tableInstance = useTable(
     {
@@ -227,7 +222,7 @@ const ProductPage = () => {
                 <Textinput
                   type="text"
                   id="category"
-                  value={categoryName} // Liaison avec l'état
+                  value={categoryName} 
                   onChange={(e) => setCategoryName(e.target.value)} // Mettre à jour l'état
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   placeholder="Saisissez le nom de la catégorie"

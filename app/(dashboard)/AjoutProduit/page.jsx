@@ -1,13 +1,38 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState , useEffect } from "react";
 import Button from "@/components/ui/Button";
 import Card from "@/components/ui/Card";
 import Textinput from "@/components/ui/Textinput";
 import Textarea from "@/components/ui/Textarea";
 import Select from "@/components/ui/Select";
 import Imageinput from "@/components/ui/ImageInput";
+import {Recherche } from "../categorieProduit/rechercheCategorie"
+
 
 const Produits = () => {
+  const [arraydata , SetArraydata] = useState([])
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(()=>{
+    const getData =async()=>{
+      setIsLoading(true);
+      const Data = await Recherche();
+      if(Data){
+        const Arraylabel = Data['data']['data'].map(item => item.label);
+        console.log(Arraylabel);
+        SetArraydata(Arraylabel)
+       
+      }
+      setIsLoading(false);
+    }
+
+    getData()
+
+
+
+  },[])
+
+
   return (
     <div>
       <Card title="Ajouter un nouveau produit">
@@ -20,11 +45,7 @@ const Produits = () => {
               placeholder="Prix du produit"
             />
             <Select
-              options={[
-                "Béton prêt à l’emploi",
-                "Béton préfabriqué",
-                "Béton précontraint",
-              ]}
+              options={arraydata}
               label="categorie du produit"
               className="w-full"
             />
