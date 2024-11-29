@@ -1,6 +1,5 @@
 "use client";
 import Card from "@/components/ui/Card";
-import Badge from "@/components/ui/Badge";
 import Icon from "@/components/ui/Icon";
 import { Disclosure } from "@headlessui/react";
 const items = [
@@ -82,7 +81,7 @@ const ChangelogPage = () => {
       <div className="lg:col-span-8 col-span-12">
         <Card title="Version's">
           <div>
-            <Badge label="new " className="bg-primary-500  text-white" />
+        
           </div>
           <div className="mt-6 space-y-5">
             {items.map((item, i) => (
