@@ -1,11 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import Select, { components } from "react-select";
 import Modal from "@/components/ui/Modal";
 import { useSelector, useDispatch } from "react-redux";
 import { toggleEmailModal, sendMail } from "./store";
 import Textinput from "@/components/ui/Textinput";
-import Textarea from "@/components/ui/Textarea";
-import Flatpickr from "react-flatpickr";
 import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as yup from "yup";

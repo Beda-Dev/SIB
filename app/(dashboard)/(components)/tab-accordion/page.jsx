@@ -13,10 +13,7 @@ const buttons = [
     title: "Profile",
     icon: "heroicons-outline:user",
   },
-  {
-    title: "Messages",
-    icon: "heroicons-outline:chat-alt-2",
-  },
+
   {
     title: "Settings",
     icon: "heroicons-outline:cog",

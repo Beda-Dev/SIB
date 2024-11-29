@@ -7,7 +7,6 @@ import DonutChart from "@/components/partials/widget/chart/donut-chart";
 import { meets, files } from "@/constant/data";
 import SelectMonth from "@/components/partials/SelectMonth";
 import TaskLists from "@/components/partials/widget/task-list";
-import MessageList from "@/components/partials/widget/message-list";
 import TrackingParcel from "@/components/partials/widget/activity";
 import TeamTable from "@/components/partials/table/team-table";
 import CalendarView from "@/components/partials/widget/CalendarView";
@@ -154,9 +153,6 @@ const ProjectDetailsPage = () => {
       <div className="grid xl:grid-cols-3 grid-cols-1 gap-5">
         <Card title="Task list" headerslot={<SelectMonth />}>
           <TaskLists />
-        </Card>
-        <Card title="Messages" headerslot={<SelectMonth />}>
-          <MessageList />
         </Card>
         <Card title="Activity" headerslot={<SelectMonth />}>
           <TrackingParcel />
