@@ -1,12 +1,12 @@
 "use client";
 
 import React, { useState, useMemo , useEffect } from "react";
-import { advancedTable } from "@/constant/table-data";
 import Card from "@/components/ui/Card";
 import Icon from "@/components/ui/Icon";
 import Button from "@/components/ui/Button";
 import Tooltip from "@/components/ui/Tooltip";
 import { useRouter } from "next/navigation";
+import { RechercheProduit } from "./Recproduit";
 import {
   useTable,
   useRowSelect,
@@ -40,45 +40,68 @@ const IndeterminateCheckbox = React.forwardRef(
 
 const ProductPage = () => {
   const router = useRouter();
+  const [product , setProduct] = useState([]);
+  const [Loading , setLoading] = useState(false)
+
+  useEffect(()=>{
+    const getData =async()=>{
+      setLoading(true);
+      const Data = await RechercheProduit();
+      if(Data){
+        
+        setProduct(Data['data']['data'])
+        console.log(Data['data']['data'])
+       
+      }
+      setLoading(false);
+    }
+
+    getData()
+
+
+
+  },[])
+
 
   const COLUMNS = [
     {
       Header: "Id",
       accessor: "id",
-      Cell: (row) => {
-        return <span>{row?.cell?.value}</span>;
-      },
     },
 
     {
       Header: "Libellé",
-      accessor: "Libellé",
-      Cell: (row) => {
-        return (
-          <div>
-            <span className="inline-flex items-center">
-              <span className="w-7 h-7 rounded-full ltr:mr-3 rtl:ml-3 flex-none bg-slate-600">
-                <img
-                  src={row?.cell?.value.image}
-                  alt=""
-                  className="object-cover w-full h-full rounded-full"
-                />
-              </span>
-              <span className="text-sm text-slate-600 dark:text-slate-300 capitalize">
-                {row?.cell?.value.name}
-              </span>
-            </span>
-          </div>
-        );
-      },
+      accessor: "label",
+
+    },
+    {
+      Header: "Images",
+      accessor: "images",
+      Cell: ({ value }) => (
+        <div className="flex space-x-2">
+          { 
+          value?.slice(0, 1).map((img) => (
+            <img
+              key={img.id}
+              src={img.url}
+              alt="Produit"
+              className="h-10 w-10 object-cover rounded"
+            />
+          ))}
+        </div>
+      ),
     },
     {
       Header: "Description",
-      accessor: "Description",
+      accessor: "description",
+      Cell: ({ value }) => (
+        <span>{value.length > 50 ? `${value.slice(0, 50)}...` : value}</span>
+      )
     },
     {
       Header: "Categorie",
-      accessor: "Categorie",
+      accessor: "category",
+      Cell: ({ value }) => <span>{value?.label || "Non défini"}</span>,
     },
 
     {
@@ -86,6 +109,15 @@ const ProductPage = () => {
       accessor: "Prix",
 
     },
+    {
+      Header: "Ajouter le ",
+      accessor: "createdAt",
+      Cell: ({ value }) => {
+        const formattedDate = new Date(value).toLocaleDateString("fr-FR");
+        return <span>{formattedDate}</span>;}
+
+    },
+
     {
         Header: "action",
         accessor: "action",
@@ -120,7 +152,7 @@ const ProductPage = () => {
   ];
 
   const columns = useMemo(() => COLUMNS, []);
-  const data = useMemo(() => advancedTable, []);
+  const data = useMemo(() => product, [product]);
 
   const tableInstance = useTable(
     {
