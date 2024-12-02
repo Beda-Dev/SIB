@@ -19,7 +19,6 @@ const MostSales = dynamic(
   }
 );
 const Dashboard = () => {
-  console.log(screen.width , screen.height);
   return (
     <div>
       <HomeBredCurbs title="Tableau de bord" />
