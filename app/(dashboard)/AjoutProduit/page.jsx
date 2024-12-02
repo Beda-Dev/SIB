@@ -7,6 +7,9 @@ import Textarea from "@/components/ui/Textarea";
 import Select from "@/components/ui/Select";
 import Imageinput from "@/components/ui/ImageInput";
 import { Recherche } from "../categorieProduit/rechercheCategorie";
+import { toast } from "react-toastify";
+import { AjouterProduit } from "./apiAjout";
+import { useRouter } from "next/navigation";
 
 const Produits = () => {
   const [arraydata, SetArraydata] = useState([]);
@@ -15,6 +18,7 @@ const Produits = () => {
   const [description, setDescription] = useState("");
   const [categorie, setCategorie] = useState();
   const [images, setImage] = useState();
+  const router = useRouter();
 
   useEffect(() => {
     const getData = async () => {
@@ -25,39 +29,44 @@ const Produits = () => {
         console.log(Arraylabel);
         SetArraydata(Arraylabel);
       }
-      setIsLoading(false);
+      
     };
 
     getData();
+    setIsLoading(false);
   }, []);
 
-  const handleSubmit = () => {
-    setCategorie(arraydata.indexOf(categorie)+1)
+  const handleSubmit = async () => {
+    setCategorie(arraydata.indexOf(categorie) + 1);
 
     const formData = {
-      Libelle,
+      libelle: Libelle,
       categorie,
       description,
       images,
     };
-
     console.log("Données du formulaire :", formData);
+    const result = await AjouterProduit(formData);
 
+    if (result.success) {
+      toast.success("Produit ajouter avec succes");
+    } else {
+      toast.error(`erreur ${result.message}`);
+    }
   };
-
 
   return (
     <div>
       <Card title="Ajouter un nouveau produit">
         <div className="grid lg:grid-cols-2 grid-cols-1 gap-5">
           <div className="grid lg:grid-cols-2 grid-cols-1 gap-5">
-            <Textinput 
-              label="Libellé" 
-              type="text" 
+            <Textinput
+              label="Libellé"
+              type="text"
               placeholder="Libellé"
               value={Libelle}
               onChange={(e) => setLibelle(e.target.value)}
-              />
+            />
             <Textinput
               label="Prix"
               type="number"
@@ -84,18 +93,25 @@ const Produits = () => {
           </div>
           <div className="grid  gap-4">
             <div className="w-full col-span-2">
-              <Imageinput
-              onChange={(File) => setImage(File)}
-              />
+              <Imageinput onChange={(File) => setImage(File)} />
             </div>
           </div>
         </div>
         <div className="ltr:text-right rtl:text-left space-x-3 rtl:space-x-reverse">
-          <Button 
-            text="Ajouter" 
+          <Button
+            text="Annuler"
             className="btn-warning bg-orange-500 "
+            
+            onClick={() => {
+              router.push("/Produit");
+            }}
+          />
+          <Button
+            text="Ajouter"
+            className="btn-success "
             onClick={handleSubmit}
-            />
+            disabled={isLoading}
+          />
         </div>
       </Card>
     </div>

@@ -40,7 +40,7 @@ const MostSales = ({ filterMap }) => {
     <div className="md:flex items-center">
       <div className="flex-none">
         <h4 className="text-slate-600 dark:text-slate-200 text-sm font-normal mb-[6px]">
-          Total earnings
+        Gains totaux
         </h4>
         {filterMap === "usa" && (
           <div className="text-lg font-medium mb-[6px] dark:text-white text-slate-900">
@@ -53,7 +53,7 @@ const MostSales = ({ filterMap }) => {
           </div>
         )}
         <div className="text-xs font-light dark:text-slate-200">
-          <span className="text-primary-500">+08%</span> From last month
+          <span className="text-primary-500">+08%</span> Du mois dernier
         </div>
         <ul className="bg-slate-50 dark:bg-slate-900 rounded p-4 min-w-[184px] space-y-5 mt-4">
           {slaes.map((item, i) => (

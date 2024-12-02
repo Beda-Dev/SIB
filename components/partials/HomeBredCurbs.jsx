@@ -19,13 +19,13 @@ const HomeBredCurbs = ({ title }) => {
           <span className="text-lg">
             <Icon icon="heroicons:calendar" />
           </span>
-          <span>Weekly</span>
+          <span>Hebdomadaire</span>
         </div>
         <div className="date-btn inline-flex btn btn-md whitespace-nowrap space-x-2 rtl:space-x-reverse cursor-pointer bg-white dark:bg-slate-800 dark:text-slate-300 btn-md h-min text-sm font-normal text-slate-900">
           <span className="text-lg">
             <Icon icon="heroicons-outline:filter" />
           </span>
-          <span>Select date</span>
+          <span>Sélectionner la date</span>
         </div>
       </div>
     </div>

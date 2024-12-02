@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 import { v4 as uuidv4 } from "uuid";
 import { toast } from "react-toastify";
 
+
 const initialUsers = () => {
   if (typeof window !== "undefined") {
     const item = window?.localStorage.getItem("users");
@@ -101,9 +102,14 @@ export const authSlice = createSlice({
       // remove isAuth from local storage
       if (typeof window !== "undefined") {
         window?.localStorage.removeItem("isAuth");
+        window?.sessionStorage.removeItem("authToken");
+        window?.sessionStorage.removeItem("userInfo");
+        window?.sessionStorage.removeItem("email");
+
       }
-      toast.success("User logged out successfully", {
+      toast.success("deconnection", {
         position: "top-right",
+        autoClose: 1500,
       });
     },
   },

@@ -11,6 +11,7 @@ import Modal from "@/components/ui/Modal";
 import Textinput from "@/components/ui/Textinput";
 import { Categorieproduit } from "./ajout";
 import { Recherche } from "./rechercheCategorie";
+import { toast } from "react-toastify";
 import {
   useTable,
   useRowSelect,
@@ -63,7 +64,7 @@ const ProductPage = () => {
     const result = await Categorieproduit(categoryName);
     
     if (result.success) {
-      console.log("Nouvelle catégorie créée :", result);
+      toast.success(`Categorie ${categoryName} creer avec success`);
       SetArraydata([...arraydata, result.data]); // Ajout de la nouvelle catégorie
     }
     setIsModalOpen(false);
@@ -84,7 +85,7 @@ const ProductPage = () => {
 
 
 
-  },[])
+  },[categoryName])
 
   const COLUMNS = [
     {

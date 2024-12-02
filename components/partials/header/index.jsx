@@ -8,7 +8,6 @@ import useNavbarType from "@/hooks/useNavbarType";
 import useMenulayout from "@/hooks/useMenulayout";
 import useSkin from "@/hooks/useSkin";
 import Logo from "./Tools/Logo";
-import SearchModal from "./Tools/SearchModal";
 import Profile from "./Tools/Profile";
 import Language from "./Tools/Language";
 import useRtl from "@/hooks/useRtl";
@@ -57,7 +56,7 @@ const Header = ({ className = "custom-class" }) => {
         className={` app-header md:px-6 px-[15px]  dark:bg-slate-800 shadow-base dark:shadow-base3 bg-white
         ${borderSwicthClass()}
              ${
-               menuType === "horizontal" && width > breakpoints.xl
+               menuType === "horizontal" && width > breakpoints.lg
                  ? "py-1"
                  : "md:py-6 py-3"
              }
@@ -68,7 +67,7 @@ const Header = ({ className = "custom-class" }) => {
 
           {menuType === "vertical" && (
             <div className="flex items-center md:space-x-4 space-x-2 rtl:space-x-reverse">
-              {collapsed && width >= breakpoints.xl && (
+              {collapsed && width >= breakpoints.lg && (
                 <button
                   className="text-xl text-slate-900 dark:text-white"
                   onClick={() => setMenuCollapsed(!collapsed)}
@@ -80,9 +79,9 @@ const Header = ({ className = "custom-class" }) => {
                   )}
                 </button>
               )}
-              {width < breakpoints.xl && <Logo />}
+              {width < breakpoints.lg && <Logo />}
               {/* open mobile menu handlaer*/}
-              {width < breakpoints.xl && width >= breakpoints.md && (
+              {width < breakpoints.lg && width >= breakpoints.md && (
                 <div
                   className="cursor-pointer text-slate-900 dark:text-white text-2xl"
                   onClick={handleOpenMobileMenu}
@@ -90,7 +89,6 @@ const Header = ({ className = "custom-class" }) => {
                   <Icon icon="heroicons-outline:menu-alt-3" />
                 </div>
               )}
-              <SearchModal />
             </div>
           )}
           {/* For Horizontal  */}
@@ -98,7 +96,7 @@ const Header = ({ className = "custom-class" }) => {
             <div className="flex items-center space-x-4 rtl:space-x-reverse">
               <Logo />
               {/* open mobile menu handlaer*/}
-              {width <= breakpoints.xl && (
+              {width <= breakpoints.lg && (
                 <div
                   className="cursor-pointer text-slate-900 dark:text-white text-2xl"
                   onClick={handleOpenMobileMenu}
@@ -109,7 +107,7 @@ const Header = ({ className = "custom-class" }) => {
             </div>
           )}
           {/*  Horizontal  Main Menu */}
-          {menuType === "horizontal" && width >= breakpoints.xl ? (
+          {menuType === "horizontal" && width >= breakpoints.lg ? (
             <HorizentalMenu />
           ) : null}
           {/* Nav Tools  */}

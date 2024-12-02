@@ -1,5 +1,18 @@
 "use server";
 
+export const GetProduitById = async (id) => {
+  const response = await fetch(`https://sibeton-api.vercel.app/api/product/${id}`);
+  const data = await response.json();
+
+  if (response.ok) {
+    console.log(data)
+    return { success: true, data };
+  }
+  else return { success: false, message: data.message};
+};
+
+
+
 export const RechercheProduit = async () => {
   try {
     const response = await fetch("https://sibeton-api.vercel.app/api/product");

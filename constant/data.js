@@ -5,17 +5,10 @@ export const menuItems = [
   },
 
   {
-    title: "Dashboard",
-    icon: "heroicons-outline:home",
-    isOpen: true,
+    title: "Tableau de bord",
     isHide: true,
-    child: [
-      {
-        childtitle: "Analytics Dashboard",
-        childlink: "analytics",
-      },
-
-    ],
+    icon: "heroicons-outline:home",
+    link: "analytics",
   },
 
   {
@@ -42,10 +35,10 @@ export const menuItems = [
     title: "Pages",
   },
   {
-    title: "Commande",
+    title: "Commandes",
     isHide: true,
-    icon: "carbon:product",
-    link: "",
+    icon: "lets-icons:order",
+    link: "Commandes",
   },
   
  

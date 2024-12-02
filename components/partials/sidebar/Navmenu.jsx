@@ -88,24 +88,9 @@ const Navmenu = ({ menus }) => {
                   </span>
                   <div className="text-box">{item.title}</div>
                 </div>
-                <div className="flex-0">
-                  <div
-                    className={`menu-arrow transform transition-all duration-300 ${
-                      activeSubmenu === i ? " rotate-90" : ""
-                    }`}
-                  >
-                    <Icon icon="heroicons-outline:chevron-right" />
-                  </div>
-                </div>
               </div>
             )}
 
-            <Submenu
-              activeSubmenu={activeSubmenu}
-              item={item}
-              i={i}
-              locationName={locationName}
-            />
           </li>
         ))}
 

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDropzone } from "react-dropzone";
 
-const DropZone = () => {
+const DropZone = ({onChange}) => {
   const [files, setFiles] = useState([]);
   const { getRootProps, getInputProps, isDragAccept } = useDropzone({
     accept: {
@@ -15,6 +15,7 @@ const DropZone = () => {
           })
         )
       );
+      onChange(acceptedFiles[0]);
     },
   });
   return (

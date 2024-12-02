@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+
 import { useSelector, useDispatch } from "react-redux";
 import { handleRtl } from "@/store/layoutReducer";
 

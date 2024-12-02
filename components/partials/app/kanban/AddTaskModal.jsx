@@ -154,7 +154,7 @@ const AddTaskModal = () => {
   return (
     <div>
       <Modal
-        title="Create Project"
+        title="Ajouter une commande"
         labelclassName="btn-outline-dark"
         activeModal={taskModal}
         onClose={() =>
@@ -168,14 +168,14 @@ const AddTaskModal = () => {
         <form onSubmit={handleSubmit(onSubmit)} className="space-y-4 ">
           <Textinput
             name="title"
-            label="Project Name"
+            label="libellé"
             placeholder="Project Name"
             register={register}
             error={errors.title}
           />
           <div className="grid lg:grid-cols-2 gap-4 grid-cols-1">
             <FormGroup
-              label="Start Date"
+              label="Date commande"
               id="default-picker"
               error={errors.startDate}
             >
@@ -201,7 +201,7 @@ const AddTaskModal = () => {
               />
             </FormGroup>
             <FormGroup
-              label="End Date"
+              label="Date de livraison"
               id="default-picker2"
               error={errors.endDate}
             >

@@ -61,12 +61,12 @@ const RecentActivity = () => {
             </div>
             <div className="text-start overflow-hidden text-ellipsis whitespace-nowrap max-w-[63%]">
               <div className="text-sm text-slate-600 dark:text-slate-300 overflow-hidden text-ellipsis whitespace-nowrap">
-                Finance KPI Mobile app launch preparion meeting.
+              Finance KPI Lancement de l’application mobile réunion de préparation.
               </div>
             </div>
             <div className="flex-1 ltr:text-right rtl:text-left">
               <div className="text-sm font-light text-slate-400 dark:text-slate-400">
-                1 hours
+                1 heure
               </div>
             </div>
           </li>

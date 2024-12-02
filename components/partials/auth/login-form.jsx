@@ -29,12 +29,20 @@ const LoginForm = () => {
   const onSubmit = async (data) => {
 
     const result = await loginUser(data.email, data.password);
-    router.push("/analytics");
     if (result.success) {
-        dispatch(setUser(result.data));
-        router.push("/analytics");
-    } else {
-        toast.error("Échec de la connexion");
+        
+
+        const { token, user } = result.data.data;
+        sessionStorage.setItem("authToken", token); 
+        sessionStorage.setItem("userInfo", JSON.stringify(user));
+        sessionStorage.setItem("email", data.email)
+
+        dispatch(setUser(user));
+        console.log(user)
+    
+        router.push("/Produit");
+        toast.success("Connection reussi");
+
     }
     if (!data.email || !data.password) {
       toast.error("Informations invalides", {

@@ -1,29 +1,36 @@
-import React from "react";
+import React  from "react";
 import Dropdown from "@/components/ui/Dropdown";
 import Icon from "@/components/ui/Icon";
 import { Menu, Transition } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { handleLogout } from "@/components/partials/auth/store";
 import { useRouter } from "next/navigation";
+import useAuth from "@/hooks/useAuth";
+import Avatar from "@/components/ui/Avatar";
 
 const ProfileLabel = () => {
 
   //const user = useSelector((state) => state.user.user);
-  //console.log(user)
+  const { authToken, userInfo } = useAuth();
+  const router = useRouter();
+  
+
+  if (!authToken || !userInfo) {
+    return <p>Non connecté</p>;
+  }
+  
+
   return (
     <div className="flex items-center">
       <div className="flex-1 ltr:mr-[10px] rtl:ml-[10px]">
         <div className="lg:h-8 lg:w-8 h-7 w-7 rounded-full">
-          <img
-            src="/assets/images/all-img/user.png"
-            alt=""
-            className="block w-full h-full object-cover rounded-full"
-          />
+        <Avatar name={`${userInfo[0].first_name} ${userInfo[0].last_name}`} size={30} />
+
         </div>
       </div>
       <div className="flex-none text-slate-600 dark:text-white text-sm font-normal items-center lg:flex hidden overflow-hidden text-ellipsis whitespace-nowrap">
         <span className="overflow-hidden text-ellipsis whitespace-nowrap w-[85px] block">
-          beda
+          {userInfo[0].first_name} {userInfo[0].last_name}
         </span>
         <span className="text-base inline-block ltr:ml-[10px] rtl:mr-[10px]">
           <Icon icon="heroicons-outline:chevron-down"></Icon>
@@ -49,7 +56,7 @@ const Profile = () => {
 
 
     {
-      label: "Settings",
+      label: "Parametre",
       icon: "heroicons-outline:cog",
       action: () => {
         router.push("/settings");
@@ -58,10 +65,17 @@ const Profile = () => {
 
 
     {
-      label: "Logout",
+      label: "Se déconnecter",
       icon: "heroicons-outline:login",
       action: () => {
         dispatch(handleLogout(false));
+        setTimeout(()=>{
+          router.push("/")
+        },1500)
+
+       
+
+
       },
     },
   ];

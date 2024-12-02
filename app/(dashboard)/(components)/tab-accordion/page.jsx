@@ -15,7 +15,7 @@ const buttons = [
   },
 
   {
-    title: "Settings",
+    title: "Paramettre",
     icon: "heroicons-outline:cog",
   },
 ];

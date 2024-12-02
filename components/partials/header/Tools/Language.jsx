@@ -2,8 +2,7 @@ import { Fragment, useState } from "react";
 import { Listbox, Transition } from "@headlessui/react";
 
 const months = [
-  { name: "Fr", image: "/assets/images/flags/frenc.png" },
-  { name: "En", image: "/assets/images/flags/en.png" },
+  { name: "Fr", image: "/assets/images/flags/frenc.png" },,
 ];
 
 const Language = () => {

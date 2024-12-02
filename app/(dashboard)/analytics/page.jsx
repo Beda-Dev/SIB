@@ -19,10 +19,10 @@ const MostSales = dynamic(
   }
 );
 const Dashboard = () => {
-  const [filterMap, setFilterMap] = useState("usa");
+  console.log(screen.width , screen.height);
   return (
     <div>
-      <HomeBredCurbs title="Dashboard" />
+      <HomeBredCurbs title="Tableau de bord" />
       <div className="grid grid-cols-12 gap-5 mb-5">
         <div className="2xl:col-span-3 lg:col-span-4 col-span-12">
           <ImageBlock1 />
@@ -44,23 +44,23 @@ const Dashboard = () => {
           </Card>
         </div>
         <div className="lg:col-span-4 col-span-12">
-          <Card title="Overview" headerslot={<SelectMonth />}>
+          <Card title="Aperçu" headerslot={<SelectMonth />}>
             <RadialsChart />
           </Card>
         </div>
         <div className="lg:col-span-8 col-span-12">
-          <Card title="All Company" headerslot={<SelectMonth />} noborder>
+          <Card title="Toute l’entreprise" headerslot={<SelectMonth />} noborder>
             <CompanyTable />
           </Card>
         </div>
         <div className="lg:col-span-4 col-span-12">
-          <Card title="Recent Activity" headerslot={<SelectMonth />}>
+          <Card title="Activité récente" headerslot={<SelectMonth />}>
             <RecentActivity />
           </Card>
         </div>
         <div className="lg:col-span-8 col-span-12">
           <Card
-            title="Most Sales"
+            title="ventes"
             headerslot={
               <div className="border border-slate-200 dark:border-slate-700 dark:bg-slate-900 rounded p-1 flex items-center">
                 <span
@@ -94,12 +94,12 @@ const Dashboard = () => {
           </Card>
         </div>
         <div className="lg:col-span-4 col-span-12">
-          <Card title="Overview" headerslot={<SelectMonth />}>
+          <Card title="Aperçu" headerslot={<SelectMonth />}>
             <RadarChart />
             <div className="bg-slate-50 dark:bg-slate-900 rounded p-4 mt-8 flex justify-between flex-wrap">
               <div className="space-y-1">
                 <h4 className="text-slate-600 dark:text-slate-200 text-xs font-normal">
-                  Invested amount
+                  Montant investi
                 </h4>
                 <div className="text-sm font-medium text-slate-900 dark:text-white">
                   $8264.35
@@ -111,7 +111,7 @@ const Dashboard = () => {
 
               <div className="space-y-1">
                 <h4 className="text-slate-600 dark:text-slate-200 text-xs font-normal">
-                  Invested amount
+                  Montant investi
                 </h4>
                 <div className="text-sm font-medium text-slate-900 dark:text-white">
                   $8264.35
@@ -120,7 +120,7 @@ const Dashboard = () => {
 
               <div className="space-y-1">
                 <h4 className="text-slate-600 dark:text-slate-200 text-xs font-normal">
-                  Invested amount
+                  Montant investi
                 </h4>
                 <div className="text-sm font-medium text-slate-900 dark:text-white">
                   $8264.35

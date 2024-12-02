@@ -4,13 +4,13 @@ import Icon from "@/components/ui/Icon";
 import { Menu } from "@headlessui/react";
 const actions = [
   {
-    name: "Last 28 Days",
+    name: "28 derniers jours",
   },
   {
-    name: " Last Month ",
+    name: " Mois precedent ",
   },
   {
-    name: "  Last Year ",
+    name: " L’année dernière ",
   },
 ];
 const SelectMonth = () => {

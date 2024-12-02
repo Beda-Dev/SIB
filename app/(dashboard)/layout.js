@@ -68,19 +68,19 @@ export default function RootLayout({ children }) {
       `}
     >
       <ToastContainer />
-      <Header className={width > breakpoints.xl ? switchHeaderClass() : ""} />
+      <Header className={width > breakpoints.lg ? switchHeaderClass() : ""} />
       {menuType === "vertical" && width > breakpoints.lg && !menuHidden && (
         <Sidebar />
       )}
       <MobileMenu
         className={`${
-          width < breakpoints.xl && mobileMenu
+          width < breakpoints.lg && mobileMenu
             ? "left-0 visible opacity-100  z-[9999]"
             : "left-[-300px] invisible opacity-0  z-[-999] "
         }`}
       />
       {/* mobile menu overlay*/}
-      {width < breakpoints.xl && mobileMenu && (
+      {width < breakpoints.lg && mobileMenu && (
         <div
           className="overlay bg-slate-900/50 backdrop-filter backdrop-blur-sm opacity-100 fixed inset-0 z-[999]"
           onClick={() => setMobileMenu(false)}
@@ -89,7 +89,7 @@ export default function RootLayout({ children }) {
 
       <div
         className={`content-wrapper transition-all duration-150 ${
-          width > 1280 ? switchHeaderClass() : ""
+          width > 1024 ? switchHeaderClass() : ""
         }`}
       >
         {/* md:min-h-screen will h-full*/}
@@ -134,7 +134,7 @@ export default function RootLayout({ children }) {
       </div>
       {width < breakpoints.md && <MobileFooter />}
       {width > breakpoints.md && (
-        <Footer className={width > breakpoints.xl ? switchHeaderClass() : ""} />
+        <Footer className={width > breakpoints.lg ? switchHeaderClass() : ""} />
       )}
     </div>
   );

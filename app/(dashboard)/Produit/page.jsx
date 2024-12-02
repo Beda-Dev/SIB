@@ -53,14 +53,17 @@ const ProductPage = () => {
         console.log(Data['data']['data'])
        
       }
-      setLoading(false);
+     
     }
 
     getData()
 
+    setLoading(false);
+
 
 
   },[])
+  
 
 
   const COLUMNS = [
@@ -77,19 +80,21 @@ const ProductPage = () => {
     {
       Header: "Images",
       accessor: "images",
-      Cell: ({ value }) => (
-        <div className="flex space-x-2">
-          { 
-          value?.slice(0, 1).map((img) => (
-            <img
-              key={img.id}
-              src={img.url}
-              alt="Produit"
-              className="h-10 w-10 object-cover rounded"
-            />
-          ))}
-        </div>
-      ),
+      Cell: ({ value }) => {
+        if (!value) return "Non disponible";
+        return (
+          <div className="flex space-x-2">
+            {value.slice(0, 1).map((img) => (
+              <img
+                key={img.id}
+                src={img.url}
+                alt="Produit"
+                className="h-10 w-10 object-cover rounded"
+              />
+            ))}
+          </div>
+        );
+      },
     },
     {
       Header: "Description",
@@ -122,6 +127,9 @@ const ProductPage = () => {
         Header: "action",
         accessor: "action",
         Cell: (row) => {
+          if(row){
+          const  id = row.original
+        }
           return (
             <div className="flex space-x-3 rtl:space-x-reverse ">
               <Tooltip content="Voir" placement="top" arrow animation="shift-away" theme="success">
@@ -130,7 +138,9 @@ const ProductPage = () => {
                 </button>
               </Tooltip>
               <Tooltip content="Editer" placement="top" arrow animation="shift-away">
-                <button className="action-btn" type="button">
+                <button className="action-btn" type="button" onClick={()=>{
+                  router.push(`/Produit/${id}`)
+                }}>
                   <Icon icon="heroicons:pencil-square" />
                 </button>
               </Tooltip>

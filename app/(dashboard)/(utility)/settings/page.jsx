@@ -15,17 +15,19 @@ const settings = () => {
                 <Icon icon="heroicons:building-office-2" />
               </div>
               <div className="flex-1 text-base text-slate-900 dark:text-white font-medium">
-                Company Settings
+                Paramètres de l’entreprise
               </div>
             </div>
             <div className="text-slate-600 dark:text-slate-300 text-sm">
-              Set up your company profile, add your company logo, and more
+              Configurez le profil de votre entreprise, ajoutez le logo de votre
+              entreprise, etc.
             </div>
             <Link
               href="#"
               className="inline-flex items-center space-x-3 rtl:space-x-reverse text-sm capitalize font-medium text-slate-600 dark:text-slate-300"
             >
-              <span>Chnage Settings</span> <Icon icon="heroicons:arrow-right" />
+              <span>Modifier les paramètres</span>{" "}
+              <Icon icon="heroicons:arrow-right" />
             </Link>
           </div>
         </Card>
@@ -36,17 +38,19 @@ const settings = () => {
                 <Icon icon="heroicons:credit-card" />
               </div>
               <div className="flex-1 text-base text-slate-900 dark:text-white font-medium">
-                Payment Settings
+                Paramètres de paiement
               </div>
             </div>
             <div className="text-slate-600 dark:text-slate-300 text-sm">
-              Connect your bank account to your company profile, and more
+              Associez votre compte bancaire au profil de votre entreprise, et
+              plus encore
             </div>
             <Link
               href="#"
               className="inline-flex items-center space-x-3 rtl:space-x-reverse text-sm capitalize font-medium text-slate-600 dark:text-slate-300"
             >
-              <span>Chnage Settings</span> <Icon icon="heroicons:arrow-right" />
+              <span>Modifier les paramètres</span>{" "}
+              <Icon icon="heroicons:arrow-right" />
             </Link>
           </div>
         </Card>
@@ -57,17 +61,18 @@ const settings = () => {
                 <Icon icon="heroicons:users" />
               </div>
               <div className="flex-1 text-base text-slate-900 dark:text-white font-medium">
-                Profile Settings
+                Paramètres du profil
               </div>
             </div>
             <div className="text-slate-600 dark:text-slate-300 text-sm">
-              Set up your profile, add your profile photo, and more
+              Configurez votre profil
             </div>
             <Link
               href="#"
               className="inline-flex items-center space-x-3 rtl:space-x-reverse text-sm capitalize font-medium text-slate-600 dark:text-slate-300"
             >
-              <span>Chnage Settings</span> <Icon icon="heroicons:arrow-right" />
+              <span>Modifier les paramètres</span>{" "}
+              <Icon icon="heroicons:arrow-right" />
             </Link>
           </div>
         </Card>
