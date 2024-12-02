@@ -19,6 +19,7 @@ const MostSales = dynamic(
   }
 );
 const Dashboard = () => {
+  const [filterMap, setFilterMap] = useState("usa");
   return (
     <div>
       <HomeBredCurbs title="Tableau de bord" />
