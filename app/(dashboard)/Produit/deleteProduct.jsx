@@ -6,11 +6,6 @@ export const handleDelete = async (productId) => {
       `https://sibeton-api.vercel.app/api/product/${productId}`,
       {
         method: "DELETE",
-        headers: {
-            "Accept": "*/*",
-            "User-Agent":"https://localhost:3000",
-            
-          },
       }
     );
 
