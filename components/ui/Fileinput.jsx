@@ -2,9 +2,9 @@ import React from "react";
 
 const Fileinput = ({
   name,
-  label = "Browse",
+  label = "Naviguer",
   onChange,
-  placeholder = "Choose a file or drop it here...",
+  placeholder = "choisir les images ou deposer ici...",
   multiple,
   preview,
   className = "custom-class",
@@ -17,8 +17,25 @@ const Fileinput = ({
     <div>
       <div className="filegroup">
         <label>
+          {multiple && preview && selectedFiles.length > 0 && (
+            <div className="flex flex-wrap space-x-5 rtl:space-x-reverse">
+              {selectedFiles.map((file, index) => (
+                <div
+                  className="xl:w-1/5 md:w-1/3 w-1/2 rounded mt-6 border p-2  border-slate-200"
+                  key={index}
+                >
+                  <img
+                    src={file ? URL.createObjectURL(file) : ""}
+                    className="object-cover w-full h-full rounded"
+                    alt={file?.name}
+                  />
+                </div>
+              ))}
+            </div>
+          )}
           <input
             type="file"
+            accept="image/*"
             onChange={onChange}
             className="bg-red-400 w-full hidden"
             name={name}
@@ -75,22 +92,6 @@ const Fileinput = ({
                 className="w-full  h-full block rounded object-contain border p-2  border-slate-200"
                 alt={selectedFile?.name}
               />
-            </div>
-          )}
-          {multiple && preview && selectedFiles.length > 0 && (
-            <div className="flex flex-wrap space-x-5 rtl:space-x-reverse">
-              {selectedFiles.map((file, index) => (
-                <div
-                  className="xl:w-1/5 md:w-1/3 w-1/2 rounded mt-6 border p-2  border-slate-200"
-                  key={index}
-                >
-                  <img
-                    src={file ? URL.createObjectURL(file) : ""}
-                    className="object-cover w-full h-full rounded"
-                    alt={file?.name}
-                  />
-                </div>
-              ))}
             </div>
           )}
         </label>

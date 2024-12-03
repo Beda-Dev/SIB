@@ -1,12 +1,16 @@
 "use client";
 
-import React, { useState, useMemo , useEffect } from "react";
+import React, { useState, useMemo, useEffect } from "react";
 import Card from "@/components/ui/Card";
 import Icon from "@/components/ui/Icon";
 import Button from "@/components/ui/Button";
 import Tooltip from "@/components/ui/Tooltip";
 import { useRouter } from "next/navigation";
 import { RechercheProduit } from "./Recproduit";
+import { handleDelete } from "./deleteProduct";
+import { toast } from "react-toastify";
+import Modal from "@/components/ui/Modal";
+import Link from "next/link";
 import {
   useTable,
   useRowSelect,
@@ -40,31 +44,68 @@ const IndeterminateCheckbox = React.forwardRef(
 
 const ProductPage = () => {
   const router = useRouter();
-  const [product , setProduct] = useState([]);
-  const [Loading , setLoading] = useState(false)
+  const [product, setProduct] = useState([]);
+  const [Loading, setLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProductId, setSelectedProductId] = useState(null);
 
-  useEffect(()=>{
-    const getData =async()=>{
-      setLoading(true);
-      const Data = await RechercheProduit();
-      if(Data){
-        
-        setProduct(Data['data']['data'])
-        console.log(Data['data']['data'])
-       
+  // Ouvrir et fermer la modale
+  const handleOpenModal = (id) => {
+    setSelectedProductId(id);
+    setIsModalOpen(true);
+  };
+
+  const handleCloseModal = () => {
+    setIsModalOpen(false);
+    setSelectedProductId(null);
+  };
+
+  useEffect(() => {
+    setLoading(true);
+    const getData = async () => {
+      try {
+        const Data = await RechercheProduit();
+        if (Data) {
+          setProduct(Data.data?.data || []);
+        }
+      } catch (error) {
+        console.error("Erreur lors du chargement des produits :", error);
+      } finally {
+        setLoading(false);
       }
-     
+    };
+
+    getData();
+  }, []);
+
+  const handleDeleteProduct = async () => {
+    if (selectedProductId) {
+      try {
+        const response = await handleDelete(selectedProductId);
+        if (response) {
+          setProduct((prev) =>
+            prev.filter((item) => item.id !== selectedProductId)
+          );
+          toast.success("Produit supprimé avec succès");
+        } else {
+          toast.error(`Erreur : ${response}`);
+        }
+      } catch (error) {
+        console.error("Erreur lors de la suppression :", error);
+        toast.error("Une erreur est survenue");
+      } finally {
+        handleCloseModal();
+      }
     }
+  };
 
-    getData()
+  if (!product && Loading) {
+    return <div className="text-center">Veillez patienter...</div>;
+  }
 
-    setLoading(false);
-
-
-
-  },[])
-  
-
+  if (!product && !Loading) {
+    return <div className="text-center">Aucune donnée disponible</div>;
+  }
 
   const COLUMNS = [
     {
@@ -75,7 +116,6 @@ const ProductPage = () => {
     {
       Header: "Libellé",
       accessor: "label",
-
     },
     {
       Header: "Images",
@@ -101,7 +141,7 @@ const ProductPage = () => {
       accessor: "description",
       Cell: ({ value }) => (
         <span>{value.length > 50 ? `${value.slice(0, 50)}...` : value}</span>
-      )
+      ),
     },
     {
       Header: "Categorie",
@@ -111,54 +151,78 @@ const ProductPage = () => {
 
     {
       Header: "Prix",
-      accessor: "Prix",
-
+      accessor: "unit_price",
     },
     {
       Header: "Ajouter le ",
       accessor: "createdAt",
       Cell: ({ value }) => {
         const formattedDate = new Date(value).toLocaleDateString("fr-FR");
-        return <span>{formattedDate}</span>;}
-
+        return <span>{formattedDate}</span>;
+      },
     },
 
     {
-        Header: "action",
-        accessor: "action",
-        Cell: (row) => {
-          if(row){
-          const  id = row.original
+      Header: "action",
+      accessor: "action",
+      Cell: (row) => {
+        if (row) {
+          const id = row.original;
         }
-          return (
-            <div className="flex space-x-3 rtl:space-x-reverse ">
-              <Tooltip content="Voir" placement="top" arrow animation="shift-away" theme="success">
-                <button className="action-btn" type="button">
-                  <Icon icon="heroicons:eye" />
-                </button>
-              </Tooltip>
-              <Tooltip content="Editer" placement="top" arrow animation="shift-away">
-                <button className="action-btn" type="button" onClick={()=>{
-                  router.push(`/Produit/${id}`)
-                }}>
-                  <Icon icon="heroicons:pencil-square" />
-                </button>
-              </Tooltip>
-              <Tooltip
-                content="supprimer"
-                placement="top"
-                arrow
-                animation="shift-away"
-                theme="danger"
+        return (
+          <div className="flex space-x-3 rtl:space-x-reverse ">
+            <Tooltip
+              content="Voir"
+              placement="top"
+              arrow
+              animation="shift-away"
+              theme="success"
+            >
+              <button
+                className="action-btn"
+                type="button"
+                onClick={() => {
+                  router.push(`/produit/${row.cell.row.values.id}`);
+                }}
               >
-                <button className="action-btn" type="button">
-                  <Icon icon="heroicons:trash" />
-                </button>
-              </Tooltip>
-            </div>
-          );
-        },
+                <Icon icon="heroicons:eye" />
+              </button>
+            </Tooltip>
+            <Tooltip
+              content="Editer"
+              placement="top"
+              arrow
+              animation="shift-away"
+            >
+              <button
+                className="action-btn"
+                type="button"
+              >
+                <Icon icon="heroicons:pencil-square" />
+              </button>
+            </Tooltip>
+            <Tooltip
+              content="supprimer"
+              placement="top"
+              arrow
+              animation="shift-away"
+              theme="danger"
+            >
+              <button
+                className="action-btn"
+                type="button"
+                onClick={() => {
+                  handleOpenModal(row.cell.row.values.id);
+                  console.log(row.cell.row.values.id);
+                }}
+              >
+                <Icon icon="heroicons:trash" />
+              </button>
+            </Tooltip>
+          </div>
+        );
       },
+    },
   ];
 
   const columns = useMemo(() => COLUMNS, []);
@@ -217,7 +281,7 @@ const ProductPage = () => {
     <>
       <Card noborder>
         <div className="md:flex pb-6 items-center">
-          <h6 className="flex-1 md:mb-0 mb-3">Produit</h6>
+          <h6 className="flex-1 md:mb-0 mb-3">produit</h6>
           <div className="md:flex md:space-x-3 items-center flex-none rtl:space-x-reverse">
             <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
             <Button
@@ -226,7 +290,7 @@ const ProductPage = () => {
               className=" btn-warning bg-orange-500 font-normal btn-sm "
               iconClass="text-lg"
               onClick={() => {
-                router.push("/AjoutProduit");
+                router.push("/ajoutproduit");
               }}
             />
           </div>
@@ -324,6 +388,7 @@ const ProductPage = () => {
           <ul className="flex items-center  space-x-3  rtl:space-x-reverse">
             <li className="text-xl leading-4 text-slate-900 dark:text-white rtl:rotate-180">
               <button
+                aria-label="Page précédente"
                 className={` ${
                   !canPreviousPage ? "opacity-50 cursor-not-allowed" : ""
                 }`}
@@ -362,6 +427,27 @@ const ProductPage = () => {
             </li>
           </ul>
         </div>
+        <Modal
+          activeModal={isModalOpen}
+          onClose={handleCloseModal}
+          title="Confirmation"
+          footerContent={
+            <>
+              <Button
+                text="Supprimer"
+                onClick={handleDeleteProduct}
+                className="btn-danger"
+              />
+              <Button
+                text="Annuler"
+                onClick={handleCloseModal}
+                className="btn-secondary"
+              />
+            </>
+          }
+        >
+          Voulez-vous vraiment supprimer ce produit ?
+        </Modal>
       </Card>
     </>
   );

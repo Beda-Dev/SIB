@@ -6,7 +6,7 @@ import Textinput from "@/components/ui/Textinput";
 import Textarea from "@/components/ui/Textarea";
 import Select from "@/components/ui/Select";
 import Imageinput from "@/components/ui/ImageInput";
-import { Recherche } from "../categorieProduit/rechercheCategorie";
+import { Recherche } from "../categorieproduit/rechercheCategorie";
 import { toast } from "react-toastify";
 import { AjouterProduit } from "./apiAjout";
 import { useRouter } from "next/navigation";
@@ -18,6 +18,8 @@ const Produits = () => {
   const [description, setDescription] = useState("");
   const [categorie, setCategorie] = useState();
   const [images, setImage] = useState();
+  const [prix, setPrix] = useState(0);
+
   const router = useRouter();
 
   useEffect(() => {
@@ -29,30 +31,35 @@ const Produits = () => {
         console.log(Arraylabel);
         SetArraydata(Arraylabel);
       }
-      
     };
 
     getData();
     setIsLoading(false);
   }, []);
 
+
   const handleSubmit = async () => {
-    setCategorie(arraydata.indexOf(categorie) + 1);
+     const categorieId = (arraydata.indexOf(categorie) + 1);
 
-    const formData = {
-      libelle: Libelle,
-      categorie,
-      description,
-      images,
-    };
-    console.log("Données du formulaire :", formData);
+    const formData = new FormData();
+
+    formData.append("label", Libelle);
+    formData.append("unit_price", prix);
+    formData.append("description", description);
+    formData.append("categoryId", categorieId);
+    images.forEach((image) => {
+        formData.append("images", image);
+      });
+  
     const result = await AjouterProduit(formData);
-
     if (result.success) {
       toast.success("Produit ajouter avec succes");
     } else {
+      console.log(result.message)
       toast.error(`erreur ${result.message}`);
     }
+
+
   };
 
   return (
@@ -66,12 +73,14 @@ const Produits = () => {
               placeholder="Libellé"
               value={Libelle}
               onChange={(e) => setLibelle(e.target.value)}
+              
             />
             <Textinput
               label="Prix"
               type="number"
               placeholder="Prix du produit"
-              disabled={true}
+              value={prix}
+              onChange={(e) => setPrix(e.target.value)}
             />
             <Select
               options={arraydata}
@@ -92,18 +101,18 @@ const Produits = () => {
             </div>
           </div>
           <div className="grid  gap-4">
-            <div className="w-full col-span-2">
+            <Card>
               <Imageinput onChange={(File) => setImage(File)} />
-            </div>
+            </Card>
+
           </div>
         </div>
         <div className="ltr:text-right rtl:text-left space-x-3 rtl:space-x-reverse">
           <Button
             text="Annuler"
             className="btn-warning bg-orange-500 "
-            
             onClick={() => {
-              router.push("/Produit");
+              router.push("/produit");
             }}
           />
           <Button

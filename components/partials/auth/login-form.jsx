@@ -40,7 +40,7 @@ const LoginForm = () => {
         dispatch(setUser(user));
         console.log(user)
     
-        router.push("/Produit");
+        router.push("/produit");
         toast.success("Connection reussi");
 
     }

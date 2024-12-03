@@ -13,21 +13,21 @@ export const menuItems = [
 
   {
     isHeadr: true,
-    title: "Paramètre",
+    title: "paramètre",
   },
 
   {
-    title: "Categorie-produit",
+    title: "categorie-produit",
     isHide: true,
     icon: "carbon:category",
-    link: "categorieProduit",
+    link: "categorieproduit",
   },
 
   {
-    title: "Produit",
+    title: "produit",
     isHide: true,
     icon: "carbon:product",
-    link: "Produit",
+    link: "produit",
   },
   
   {
@@ -35,10 +35,10 @@ export const menuItems = [
     title: "Pages",
   },
   {
-    title: "Commandes",
+    title: "commandes",
     isHide: true,
     icon: "lets-icons:order",
-    link: "Commandes",
+    link: "commandes",
   },
   
  
@@ -50,7 +50,7 @@ export const menuItems = [
 
 export const topMenu = [
   {
-    title: "Dashboard",
+    title: "Tableau de bord",
     icon: "heroicons-outline:home",
     link: "/app/home",
     child: [

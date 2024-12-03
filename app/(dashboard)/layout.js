@@ -31,7 +31,7 @@ export default function RootLayout({ children }) {
   const [isDark] = useDarkMode();
   const [skin] = useSkin();
   const [navbarType] = useNavbarType();
-  const [isMonoChrome] = useMonoChrome();
+  const [] = useMonoChrome();
   const router = useRouter();
   const { isAuth } = useSelector((state) => state.auth);
 

@@ -1,33 +1,12 @@
 "use server";
 
 
-export const AjouterProduit = async ({ libelle, description, categorie, images }) => {
-  if (!libelle || libelle.trim() === "") {
-    return { success: false, message: "Le libellé est requis." };
-  }
-  if (!description || description.trim() === "") {
-    return { success: false, message: "La description est requise." };
-  }
-  if (!categorie) {
-    return { success: false, message: "La catégorie est requise." };
-  }
-  if (!images || images.length === 0) {
-    return { success: false, message: "Au moins une image est requise." };
-  }
-
+export const AjouterProduit = async (formData) => {
   try {
 
-    const response = await fetch("https://sibeton-api.vercel.app/api/products", {
+    const response = await fetch("https://sibeton-api.vercel.app/api/product", {
       method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({
-        label: libelle,
-        description,
-        categoryId: categorie,
-        images,
-      }),
+      body:formData,
     });
 
     const data = await response.json();
@@ -44,3 +23,5 @@ export const AjouterProduit = async ({ libelle, description, categorie, images }
     return { success: false, message: "Une erreur est survenue lors de l'ajout du produit." };
   }
 };
+
+

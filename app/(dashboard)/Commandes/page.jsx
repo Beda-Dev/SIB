@@ -36,7 +36,7 @@ const KanbanPage = () => {
       <ToastContainer />
       <div className="flex flex-wrap justify-between items-center mb-4">
         <h4 className="font-medium lg:text-2xl text-xl capitalize text-slate-900 inline-block ltr:pr-4 rtl:pl-4">
-          Commande
+          commande
         </h4>
       </div>
 
@@ -87,7 +87,7 @@ const KanbanPage = () => {
                                   placement="top"
                                   arrow
                                   theme="danger"
-                                  content="Delete"
+                                  content="Supprimer"
                                 >
                                   <button
                                     className="border border-slate-200 dark:border-slate-700 dark:text-slate-400 rounded h-6 w-6 flex flex-col  items-center justify-center text-base text-slate-600"

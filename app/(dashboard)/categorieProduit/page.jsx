@@ -96,13 +96,6 @@ const ProductPage = () => {
       Header: "Libellé",
       accessor: "label",
     },
-    {
-      Header: "Créé le",
-      accessor: "createdAt",
-      Cell: ({ value }) => {
-        const formattedDate = new Date(value).toLocaleDateString("fr-FR");
-        return <span>{formattedDate}</span>;}
-    },
 
     {
       Header: "action",
@@ -153,19 +146,6 @@ const ProductPage = () => {
 
     (hooks) => {
       hooks.visibleColumns.push((columns) => [
-        {
-          id: "selection",
-          Header: ({ getToggleAllRowsSelectedProps }) => (
-            <div>
-              <IndeterminateCheckbox {...getToggleAllRowsSelectedProps()} />
-            </div>
-          ),
-          Cell: ({ row }) => (
-            <div>
-              <IndeterminateCheckbox {...row.getToggleRowSelectedProps()} />
-            </div>
-          ),
-        },
         ...columns,
       ]);
     }
