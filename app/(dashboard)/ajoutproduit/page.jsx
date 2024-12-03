@@ -6,7 +6,7 @@ import Textinput from "@/components/ui/Textinput";
 import Textarea from "@/components/ui/Textarea";
 import Select from "@/components/ui/Select";
 import Imageinput from "@/components/ui/ImageInput";
-import { Recherche } from "../categorieproduit/rechercheCategorie";
+import { Recherche } from "./categorie";
 import { toast } from "react-toastify";
 import { AjouterProduit } from "./apiAjout";
 import { useRouter } from "next/navigation";
