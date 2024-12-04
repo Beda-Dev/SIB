@@ -85,7 +85,7 @@ const Modal = ({
                       <div
                         className={`relative overflow-hidden py-4 px-5 text-white flex justify-between  ${themeClass}`}
                       >
-                        <h2 className="capitalize leading-6 tracking-wider font-medium text-base text-white">
+                        <h2 className=" leading-6 tracking-wider font-medium text-base text-white">
                           {title}
                         </h2>
                         <button onClick={closeModal} className="text-[22px]">
@@ -150,7 +150,7 @@ const Modal = ({
                     <div
                       className={`relative overflow-hidden py-4 px-5 text-white flex justify-between  ${themeClass}`}
                     >
-                      <h2 className="capitalize leading-6 tracking-wider font-medium text-base text-white">
+                      <h2 className=" leading-6 tracking-wider font-medium text-base text-white">
                         {title}
                       </h2>
                       <button onClick={onClose} className="text-[22px]">

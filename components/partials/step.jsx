@@ -55,7 +55,7 @@ const Step = () => {
               } absolute top-1/2 h-[2px] w-full`}
             ></div>
 
-            <div className="text-sm mt-[10px] leading-[16px] font-medium capitalize text-slate-500-500 text-center"></div>
+            <div className="text-sm mt-[10px] leading-[16px] font-medium text-slate-500-500 text-center"></div>
           </div>
         ))}
       </div>

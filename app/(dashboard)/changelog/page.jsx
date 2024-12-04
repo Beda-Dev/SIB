@@ -114,7 +114,7 @@ const ChangelogPage = () => {
                                   <span>{data.name}</span>
 
                                   <span
-                                    className={` px-2 rounded-full text-xs capitalize
+                                    className={` px-2 rounded-full text-xs
                                     ${
                                       data.tag === "added"
                                         ? "bg-indigo-100 text-indigo-500"

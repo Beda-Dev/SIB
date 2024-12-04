@@ -13,7 +13,7 @@ const profile = () => {
   const router = useRouter()
 
   if (!authToken || !userInfo) {
-    return <p>Non connecté</p>;
+    return <p>non connecté</p>;
   }
 
   return (

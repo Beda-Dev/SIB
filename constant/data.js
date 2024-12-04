@@ -52,15 +52,7 @@ export const topMenu = [
   {
     title: "Tableau de bord",
     icon: "heroicons-outline:home",
-    link: "/app/home",
-    child: [
-      {
-        childtitle: "Analytics Dashboard",
-        childlink: "dashboard",
-        childicon: "heroicons:presentation-chart-line",
-      }
-
-    ],
+    link: "analytics",
   },
 
  

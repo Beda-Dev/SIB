@@ -89,7 +89,7 @@ const HorizentalMenu = () => {
                               }`}
                             ></span>
                             <span
-                              className={`capitalize ${
+                              className={` ${
                                 location === ms_item.m_childlink
                                   ? " text-slate-900 dark:text-white font-medium"
                                   : "text-slate-600 dark:text-slate-300"

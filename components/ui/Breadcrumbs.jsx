@@ -43,7 +43,7 @@ const Breadcrumbs = () => {
             </li>
             {groupTitle && (
               <li className="text-primary-500">
-                <button type="button" className="capitalize">
+                <button type="button" className="">
                   {groupTitle}
                 </button>
                 <span className="breadcrumbs-icon rtl:transform rtl:rotate-180">
@@ -51,7 +51,7 @@ const Breadcrumbs = () => {
                 </span>
               </li>
             )}
-            <li className="capitalize text-slate-500 dark:text-slate-400">
+            <li className=" text-slate-500 dark:text-slate-400">
               {locationName}
             </li>
           </ul>

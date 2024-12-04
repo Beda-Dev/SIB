@@ -35,7 +35,7 @@ const KanbanPage = () => {
     <div>
       <ToastContainer />
       <div className="flex flex-wrap justify-between items-center mb-4">
-        <h4 className="font-medium lg:text-2xl text-xl capitalize text-slate-900 inline-block ltr:pr-4 rtl:pl-4">
+        <h4 className="font-medium lg:text-2xl text-xl text-slate-900 inline-block ltr:pr-4 rtl:pl-4">
           commande
         </h4>
       </div>
@@ -79,7 +79,7 @@ const KanbanPage = () => {
                                   backgroundColor: column.color,
                                 }}
                               ></div>
-                              <div className="text-lg text-slate-900 dark:text-white font-medium capitalize">
+                              <div className="text-lg text-slate-900 dark:text-white font-medium ">
                                 {column.name}
                               </div>
                               <div className="flex items-center space-x-2 rtl:space-x-reverse">

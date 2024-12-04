@@ -24,7 +24,7 @@ const settings = () => {
             </div>
             <Link
               href="#"
-              className="inline-flex items-center space-x-3 rtl:space-x-reverse text-sm capitalize font-medium text-slate-600 dark:text-slate-300"
+              className="inline-flex items-center space-x-3 rtl:space-x-reverse text-sm  font-medium text-slate-600 dark:text-slate-300"
             >
               <span>Modifier les paramètres</span>{" "}
               <Icon icon="heroicons:arrow-right" />
@@ -47,7 +47,7 @@ const settings = () => {
             </div>
             <Link
               href="#"
-              className="inline-flex items-center space-x-3 rtl:space-x-reverse text-sm capitalize font-medium text-slate-600 dark:text-slate-300"
+              className="inline-flex items-center space-x-3 rtl:space-x-reverse text-sm font-medium text-slate-600 dark:text-slate-300"
             >
               <span>Modifier les paramètres</span>{" "}
               <Icon icon="heroicons:arrow-right" />
@@ -69,7 +69,7 @@ const settings = () => {
             </div>
             <Link
               href="#"
-              className="inline-flex items-center space-x-3 rtl:space-x-reverse text-sm capitalize font-medium text-slate-600 dark:text-slate-300"
+              className="inline-flex items-center space-x-3 rtl:space-x-reverse text-sm font-medium text-slate-600 dark:text-slate-300"
             >
               <span>Modifier les paramètres</span>{" "}
               <Icon icon="heroicons:arrow-right" />

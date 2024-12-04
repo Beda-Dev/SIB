@@ -46,7 +46,7 @@ const TabAccrodain = () => {
               <Tab as={Fragment} key={i}>
                 {({ selected }) => (
                   <button
-                    className={` text-sm font-medium mb-7 capitalize bg-white
+                    className={` text-sm font-medium mb-7 bg-white
              dark:bg-slate-800 ring-0 foucs:ring-0 focus:outline-none px-2
               transition duration-150 before:transition-all before:duration-150 relative 
               before:absolute before:left-1/2 before:bottom-[-6px] before:h-[1.5px] before:bg-primary-500 
@@ -106,7 +106,7 @@ const TabAccrodain = () => {
               <Tab as={Fragment} key={i}>
                 {({ selected }) => (
                   <button
-                    className={` inline-flex items-start text-sm font-medium mb-7 capitalize bg-white dark:bg-slate-800 ring-0 foucs:ring-0 focus:outline-none px-2 transition duration-150 before:transition-all before:duration-150 relative before:absolute
+                    className={` inline-flex items-start text-sm font-medium mb-7 bg-white dark:bg-slate-800 ring-0 foucs:ring-0 focus:outline-none px-2 transition duration-150 before:transition-all before:duration-150 relative before:absolute
                      before:left-1/2 before:bottom-[-6px] before:h-[1.5px]
                       before:bg-primary-500 before:-translate-x-1/2
               
@@ -168,7 +168,7 @@ const TabAccrodain = () => {
                   <Tab key={i} as={Fragment}>
                     {({ selected }) => (
                       <button
-                        className={` text-sm font-medium md:block inline-block mb-4 last:mb-0 capitalize ring-0 foucs:ring-0 focus:outline-none px-6 rounded-md py-2 transition duration-150
+                        className={` text-sm font-medium md:block inline-block mb-4 last:mb-0 ring-0 foucs:ring-0 focus:outline-none px-6 rounded-md py-2 transition duration-150
                 ${
                   selected
                     ? "text-white bg-primary-500 "
@@ -226,7 +226,7 @@ const TabAccrodain = () => {
               <Tab as={Fragment} key={i}>
                 {({ selected }) => (
                   <button
-                    className={` text-sm font-medium mb-7 last:mb-0 capitalize ring-0 foucs:ring-0 focus:outline-none px-6 rounded-md py-2 transition duration-150
+                    className={` text-sm font-medium mb-7 last:mb-0 ring-0 foucs:ring-0 focus:outline-none px-6 rounded-md py-2 transition duration-150
               
               ${
                 selected

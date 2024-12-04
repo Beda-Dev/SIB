@@ -44,7 +44,7 @@ const Textinput = ({
       {label && (
         <label
           htmlFor={id}
-          className={`block capitalize ${classLabel}  ${
+          className={`block  ${classLabel}  ${
             horizontal ? "flex-0 mr-6 md:w-[100px] w-[60px] break-words" : ""
           }`}
         >

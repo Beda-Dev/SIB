@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import Modal from "@/components/ui/Modal";
 import Textinput from "@/components/ui/Textinput";
 import { Categorieproduit } from "./ajout";
-import { Recherche } from "./rechercheCategorie";
+import { Recherche , modification_categorie } from "./api_category";
 import { toast } from "react-toastify";
 import {
   useTable,
@@ -42,11 +42,14 @@ const IndeterminateCheckbox = React.forwardRef(
   }
 );
 
-const ProductPage = () => {
+const categorie_de_produit = () => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false); // État pour afficher ou non la modale
+  const [isModalOpen1, setIsModalOpen1] = useState(false);
   const [categoryName, setCategoryName] = useState(""); // État pour la valeur de l'input
-  const [arraydata , SetArraydata] = useState([])
+  const [newName, setNewName] = useState("");
+  const [id_categorie , setId_categorie] = useState(0)
+  const [arraydata, SetArraydata] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
   // Ouvrir la modale
@@ -59,10 +62,32 @@ const ProductPage = () => {
     setIsModalOpen(false);
   };
 
+  // Ouvrir la modale1
+  const handleOpenModal1 = () => {
+    setIsModalOpen1(true);
+  };
+
+  // Fermer la modale1
+  const handleCloseModal1 = () => {
+    setIsModalOpen1(false);
+  };
+
+  const Modification_categorie = async () => {
+    console.log("catégorie modifier :", newName);
+    const result = await modification_categorie(id_categorie , newName)
+
+    if (result.success) {
+      toast.success(`Categorie modifier avec success`);
+    }
+
+    setIsModalOpen1(false);
+    setNewName("");
+  };
+
   const handleCreateCategory = async () => {
     console.log("Nouvelle catégorie :", categoryName);
     const result = await Categorieproduit(categoryName);
-    
+
     if (result.success) {
       toast.success(`Categorie ${categoryName} creer avec success`);
       SetArraydata([...arraydata, result.data]); // Ajout de la nouvelle catégorie
@@ -70,22 +95,18 @@ const ProductPage = () => {
     setIsModalOpen(false);
     setCategoryName("");
   };
-  useEffect(()=>{
-    const getData =async()=>{
+  useEffect(() => {
+    const getData = async () => {
       setIsLoading(true);
       const Data = await Recherche();
-      if(Data){
-        SetArraydata(Data['data']['data'])
-       
+      if (Data) {
+        SetArraydata(Data["data"]["data"]);
       }
       setIsLoading(false);
-    }
+    };
 
-    getData()
-
-
-
-  },[categoryName])
+    getData();
+  }, [categoryName , newName]);
 
   const COLUMNS = [
     {
@@ -104,23 +125,21 @@ const ProductPage = () => {
         return (
           <div className="flex space-x-3 rtl:space-x-reverse ">
             <Tooltip
-              content="Voir"
-              placement="top"
-              arrow
-              animation="shift-away"
-              theme="success"
-            >
-              <button className="action-btn" type="button">
-                <Icon icon="heroicons:eye" />
-              </button>
-            </Tooltip>
-            <Tooltip
-              content="Editer"
+              content="éditer"
               placement="top"
               arrow
               animation="shift-away"
             >
-              <button className="action-btn" type="button">
+              <button
+                className="action-btn"
+                type="button"
+                onClick={()=>{
+                  setNewName(row.cell.row.values.label)
+                  setId_categorie(row.cell.row.values.id)
+                  console.log(row.cell.row.values.label);
+                  console.log(row.cell.row.values.id);
+                  handleOpenModal1() }}
+              >
                 <Icon icon="heroicons:pencil-square" />
               </button>
             </Tooltip>
@@ -145,9 +164,7 @@ const ProductPage = () => {
     useRowSelect,
 
     (hooks) => {
-      hooks.visibleColumns.push((columns) => [
-        ...columns,
-      ]);
+      hooks.visibleColumns.push((columns) => [...columns]);
     }
   );
   const {
@@ -203,7 +220,7 @@ const ProductPage = () => {
                 <Textinput
                   type="text"
                   id="category"
-                  value={categoryName} 
+                  value={categoryName}
                   onChange={(e) => setCategoryName(e.target.value)} // Mettre à jour l'état
                   className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
                   placeholder="Saisissez le nom de la catégorie"
@@ -343,9 +360,39 @@ const ProductPage = () => {
             </li>
           </ul>
         </div>
+        <Modal
+          activeModal={isModalOpen1} // Passer l'état pour afficher ou non la modale
+          onClose={handleCloseModal1} // Fermer la modale
+          title="Modifier une categorie"
+          footerContent={
+            <Button
+              text="Modifier"
+              className="btn-success"
+              onClick={Modification_categorie} // Créer la catégorie au clic
+            />
+          }
+        >
+          <div>
+            <label
+              htmlFor="newcategory"
+              className="block text-sm font-medium text-gray-700"
+            >
+              nouveau nom
+            </label>
+            <Textinput
+              type="text"
+              id="newcategory"
+              value={newName}
+              defaultValue={newName}
+              onChange={(e) => setNewName(e.target.value)}
+              className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm"
+              placeholder="Saisissez le nom de la catégorie"
+            />
+          </div>
+        </Modal>
       </Card>
     </>
   );
 };
 
-export default ProductPage;
+export default categorie_de_produit;

@@ -35,7 +35,7 @@ const Topfilter = ({ filter, item, onClick }) => {
             {item.name}
           </span>
         </div>
-        <span className="flex-none font-normal capitalize text-sm">
+        <span className="flex-none font-normal  text-sm">
           {item.count}
         </span>
       </label>

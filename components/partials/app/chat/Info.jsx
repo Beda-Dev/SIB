@@ -75,7 +75,7 @@ const Info = () => {
           >
             <button className="flex space-x-2 rtl:space-x-reverse">
               <Icon icon={slink.icon} className="text-base" />
-              <span className="capitalize font-normal text-slate-600 dark:text-slate-300">
+              <span className=" font-normal text-slate-600 dark:text-slate-300">
                 {slink.name}
               </span>
             </button>

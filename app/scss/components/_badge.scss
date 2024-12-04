@@ -1,5 +1,5 @@
 .badge {
-  @apply py-1 px-2 text-xs  capitalize font-semibold rounded-[.358rem] whitespace-nowrap  align-baseline inline-flex;
+  @apply py-1 px-2 text-xs   font-semibold rounded-[.358rem] whitespace-nowrap  align-baseline inline-flex;
   &.pill {
     @apply rounded-[999px];
   }

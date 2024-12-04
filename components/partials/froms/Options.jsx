@@ -13,7 +13,7 @@ const fruits = [
 const formatGroupLabel = (data) => (
   <div className="flex justify-between items-center">
     <strong>
-      <span className=" text-2xl font-semibold capitalize">{data.label}</span>
+      <span className=" text-2xl font-semibold ">{data.label}</span>
     </strong>
     <span>{data.options.length}</span>
   </div>

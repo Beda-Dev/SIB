@@ -1,5 +1,6 @@
 "use server";
 
+
 export const GetProduitById = async (id) => {
   const response = await fetch(`https://sibeton-api.vercel.app/api/product/${id}`);
   const data = await response.json();

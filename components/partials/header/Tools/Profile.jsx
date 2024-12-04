@@ -16,7 +16,7 @@ const ProfileLabel = () => {
   
 
   if (!authToken || !userInfo) {
-    return <p>Non connecté</p>;
+    return <p>non connecté</p>;
   }
   
 
