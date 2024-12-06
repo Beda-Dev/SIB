@@ -112,6 +112,10 @@ const categorie_de_produit = () => {
     {
       Header: "Id",
       accessor: "id",
+      Cell: ({ row }) => ( <div>
+        {+row.id + 1}
+      </div>
+      ),
     },
     {
       Header: "Libellé",
@@ -236,7 +240,7 @@ const categorie_de_produit = () => {
                 className="min-w-full divide-y divide-slate-100 table-fixed dark:divide-slate-700"
                 {...getTableProps}
               >
-                <thead className=" border-t border-slate-100 dark:border-slate-800">
+                <thead className="bg-slate-100 dark:bg-slate-700">
                   {headerGroups.map((headerGroup) => (
                     <tr
                       {...headerGroup.getHeaderGroupProps()}
@@ -271,7 +275,7 @@ const categorie_de_produit = () => {
                   {page.map((row) => {
                     prepareRow(row);
                     return (
-                      <tr {...row.getRowProps()} key={`ex-tr2-${row.id}`}>
+                      <tr {...row.getRowProps()} key={`ex-tr2-${row.id}`} className="even:bg-slate-100 dark:even:bg-slate-700">
                         {row.cells.map((cell) => {
                           return (
                             <td
@@ -395,4 +399,4 @@ const categorie_de_produit = () => {
   );
 };
 
-export default categorie_de_produit;
+export default categorie_de_produit ;

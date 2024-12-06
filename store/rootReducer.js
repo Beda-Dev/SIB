@@ -7,8 +7,10 @@ import kanban from "@/components/partials/app/kanban/store";
 import calendar from "@/components/partials/app/calender/store";
 import auth from "@/components/partials/auth/store";
 import user from "./userReducer";
+import component from "./barReducer"
 
 const rootReducer = {
+
   user,
   layout,
   todo,
@@ -18,6 +20,7 @@ const rootReducer = {
   kanban,
   calendar,
   auth,
+  component,
   
 };
 export default rootReducer;

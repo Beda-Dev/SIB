@@ -1,13 +1,14 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+
 import { GetProduitById } from "./api_recherche_produit.jsx";
-import Card from "@/components/ui/Card";
 
 const VoirProduit = ({ id }) => {
   const [produit, setProduit] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [selectedSize, setSelectedSize] = useState(null);
+  
 
   useEffect(() => {
     const fetchProduit = async () => {
@@ -50,7 +51,7 @@ const VoirProduit = ({ id }) => {
   }
 
   return (
-    <Card className="p-6 bg-white shadow-lg rounded-lg">
+    <>
       <header className="text-center mb-8">
         <h1 className="text-4xl font-bold text-gray-800 mb-2">
           Détails du Produit
@@ -60,13 +61,13 @@ const VoirProduit = ({ id }) => {
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
         {/* Section Image */}
-        <section className="space-y-6">
+        <section className="space-y-6 flex">
           <img
             src={produit.images?.[0]?.url}
             alt={produit.label}
-            className="w-full rounded-lg object-cover shadow-md transition-transform duration-300 hover:scale-105"
+            className="w-64 h-64 rounded-lg object-cover shadow-md transition-transform duration-300 hover:scale-105"
           />
-          <div className="flex space-x-3 overflow-x-auto">
+          <div className="flex space-x-3">
             {produit.images?.map((img, index) => (
               <img
                 key={index}
@@ -88,7 +89,7 @@ const VoirProduit = ({ id }) => {
             </span>
           </p>
           <div className="text-2xl font-bold text-gray-800">
-            ${produit.unit_price.toFixed(2)}
+            ${produit.unit_price}
             <div className="flex space-x-3">
               {produit.sizes?.map((size, index) => (
                 <button
@@ -115,7 +116,7 @@ const VoirProduit = ({ id }) => {
           </div>
         </section>
       </div>
-    </Card>
+    </>
   );
 };
 

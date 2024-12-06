@@ -13,7 +13,7 @@ import { useRouter } from "next/navigation";
 
 const Produits = () => {
   const [arraydata, SetArraydata] = useState([]);
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
   const [Libelle, setLibelle] = useState("");
   const [description, setDescription] = useState("");
   const [categorie, setCategorie] = useState();
@@ -39,6 +39,9 @@ const Produits = () => {
 
 
   const handleSubmit = async () => {
+
+    setIsLoading(true);
+    
      const categorieId = (arraydata.indexOf(categorie) + 1);
 
     const formData = new FormData();
@@ -47,17 +50,28 @@ const Produits = () => {
     formData.append("unit_price", prix);
     formData.append("description", description);
     formData.append("categoryId", categorieId);
+    if(images){
     images.forEach((image) => {
         formData.append("images", image);
       });
+    }else{
+      formData.append("images", [])
+    }
   
     const result = await AjouterProduit(formData);
     if (result.success) {
       toast.success("Produit ajouter avec succes");
+      setLibelle("");
+      setDescription("");
+      setImage([]);
+      setPrix(0);
+  
     } else {
       console.log(result.message)
       toast.error(`erreur ${result.message}`);
     }
+
+    setIsLoading(false);
 
 
   };

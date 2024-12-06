@@ -13,18 +13,18 @@ export const menuItems = [
 
   {
     isHeadr: true,
-    title: "paramètre",
+    title: "Paramètre",
   },
 
   {
-    title: "categorie-produit",
+    title: "Categorie de produit",
     isHide: true,
     icon: "carbon:category",
-    link: "categorieproduit",
+    link: "categorie_de_produit",
   },
 
   {
-    title: "produit",
+    title: "Produit",
     isHide: true,
     icon: "carbon:product",
     link: "produit",
@@ -35,7 +35,7 @@ export const menuItems = [
     title: "Pages",
   },
   {
-    title: "commandes",
+    title: "Commandes",
     isHide: true,
     icon: "lets-icons:order",
     link: "commandes",

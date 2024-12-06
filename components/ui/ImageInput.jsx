@@ -2,66 +2,79 @@ import React, { useEffect, useState } from "react";
 import { useDropzone } from "react-dropzone";
 
 const DropZone = ({ onChange, defaultValue = [] }) => {
-  const [files, setFiles] = useState([]);
+  const [files, setFiles] = useState(() =>
+    defaultValue.map((file) => ({
+      ...file,
+      preview: file.url || (file instanceof File ? URL.createObjectURL(file) : null),
+    }))
+  );
 
-  useEffect(() => {
-    // Si un defaultValue est fourni, on l'utilise pour initialiser les fichiers
-    if (defaultValue.length > 0) {
-      const initializedFiles = defaultValue.map((file) => ({
-        ...file,
-        preview: file.url || URL.createObjectURL(file), // Permet de gérer les fichiers locaux ou les URLs
-      }));
-      setFiles(initializedFiles);
-    }
-  }, [defaultValue]);
-
+  // Gestion des nouvelles images ajoutées via dropzone
   const { getRootProps, getInputProps, isDragAccept } = useDropzone({
     accept: {
       "image/*": [],
     },
     onDrop: (acceptedFiles) => {
-      const updatedFiles = acceptedFiles.map((file) =>
-        Object.assign(file, {
-          preview: URL.createObjectURL(file),
-        })
-      );
-      setFiles((prev) => [...prev, ...updatedFiles]);
-      if (onChange) onChange([...files, ...acceptedFiles]);
+      const newFiles = acceptedFiles.map((file) => ({
+        ...file,
+        preview: URL.createObjectURL(file),
+      }));
+
+      const updatedFiles = [...files, ...newFiles];
+      setFiles(updatedFiles);
+
+      if (onChange) onChange(updatedFiles);
     },
   });
 
-  // Supprimer une image
+  // Supprimer un fichier
   const removeFile = (index) => {
+    const fileToRemove = files[index];
+
+    // Révoquer l'URL si elle a été générée localement
+    if (fileToRemove && !fileToRemove.url) {
+      URL.revokeObjectURL(fileToRemove.preview);
+    }
+
     const updatedFiles = files.filter((_, i) => i !== index);
     setFiles(updatedFiles);
-    if (onChange) onChange(updatedFiles); // Mettre à jour le parent après suppression
+
+    if (onChange) onChange(updatedFiles);
   };
+
+  // Nettoyage des URLs générées
+  useEffect(() => {
+    return () => {
+      files.forEach((file) => {
+        if (!file.url) {
+          URL.revokeObjectURL(file.preview);
+        }
+      });
+    };
+  }, [files]);
 
   return (
     <div className="w-full text-center rounded-md py-4 flex flex-col justify-center items-center">
-      {/* Zone des images sélectionnées */}
+      {/* Aperçu des fichiers */}
       <div className="flex flex-wrap gap-4 justify-start">
         {files.map((file, index) => (
           <div
-            className="relative xl:w-1/5 md:w-1/3 w-1/2 rounded border p-2 border-slate-200"
+            className="relative w-32 h-32 rounded border p-2 border-slate-200 flex items-center justify-center bg-gray-50"
             key={index}
           >
-            {/* Bouton pour supprimer */}
+            {/* Bouton supprimer */}
             <button
-              className="absolute top-2 right-2 transparent text-white rounded-full w-6 h-6 flex items-center justify-center"
+              className="absolute top-2 right-2 text-white rounded-full w-6 h-6 flex items-center justify-center"
               onClick={() => removeFile(index)}
               aria-label={`Supprimer ${file.name || "image"}`}
             >
               &times;
             </button>
-            {/* Aperçu de l'image */}
+            {/* Aperçu image */}
             <img
               src={file.preview}
-              className="object-cover w-full h-full rounded"
+              className="object-contain w-full h-full rounded"
               alt={file.name || `Image ${index + 1}`}
-              onLoad={() => {
-                if (!file.url) URL.revokeObjectURL(file.preview); // Révoquer l'URL si elle a été créée localement
-              }}
             />
           </div>
         ))}
