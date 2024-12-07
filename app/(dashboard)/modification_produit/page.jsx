@@ -20,7 +20,7 @@ const FormulaireModificationProduit = () => {
   const [description, setDescription] = useState("");
   const [categorie, setCategorie] = useState("");
   const [images, setImages] = useState([]);
-  const [prix, setPrix] = useState(1);
+  const [prix, setPrix] = useState();
   const [id, setId] = useState(null);
 
   const router = useRouter();
@@ -72,6 +72,18 @@ const FormulaireModificationProduit = () => {
           setDescription(produit.description);
           setCategorie(produit.categoryId);
           setImages(produit.images || []);
+
+          const initialImages =
+            produit.images?.map((image) => {
+              if (typeof image === "string") {
+                // Crée un fichier simulé pour l'URL
+                return new File([], image.split("/").pop(), {
+                  type: "image/jpeg",
+                });
+              }
+              return image; // Garde l'objet `File` ou autre structure intacte
+            }) || [];
+          setImages(initialImages);
         } else {
           throw new Error("Produit introuvable.");
         }
@@ -94,14 +106,10 @@ const FormulaireModificationProduit = () => {
       formData.append("label", libelle);
       formData.append("unit_price", prix);
       formData.append("description", description);
-      formData.append("categoryId", parseInt(categorieId));
-      if (Array.isArray(images)) {
-        images.forEach((image) => {
-          formData.append("images", image); // Chaque image doit être un objet File
-        });
-      } else {
-        formData.append("images", images); // Si images est déjà un seul fichier, l'ajouter directement
-      }
+      formData.append("categoryId", parseInt(categorieId || 1));
+      images.forEach((image) => {
+        formData.append("images", image);
+      });
       console.log("type");
       logFormDataTypes(formData);
 
