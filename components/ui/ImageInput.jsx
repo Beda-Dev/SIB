@@ -18,9 +18,19 @@ const DropZone = ({ onChange, defaultValue = [] }) => {
           preview: file.url,
         };
       });
-      setFiles(initializedFiles);
+
+      // Ajout des fichiers initiaux tout en évitant les doublons
+      setFiles((prevFiles) => {
+        const fileNames = prevFiles.map((f) => f.name || f.url);
+        const newFiles = initializedFiles.filter(
+          (file) => !fileNames.includes(file.name || file.url)
+        );
+        const allFiles = [...prevFiles, ...newFiles];
+        if (onChange) onChange(allFiles); // Mise à jour des fichiers dans le parent
+        return allFiles;
+      });
     }
-  }, [defaultValue]);
+  }, []);
 
   const { getRootProps, getInputProps, isDragAccept } = useDropzone({
     accept: {

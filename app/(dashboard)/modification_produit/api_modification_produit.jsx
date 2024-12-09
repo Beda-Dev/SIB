@@ -2,12 +2,6 @@
 
 export const modification_produit = async ({id, formData}) => {
 
-  const logFormDataTypes = (formData) => {
-    for (const [key, value] of formData.entries()) {
-      console.log(`Key: ${key}, Value: ${value}, Type: ${typeof value}`);}}
-
-  console.log('VOICI les donnée recu par l api pour la modification :')
-  logFormDataTypes(formData)
     try {
       const response = await fetch(
         `https://sibeton-api.vercel.app/api/product/${id}`,
