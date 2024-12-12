@@ -79,13 +79,13 @@ const TotalTable = () => {
         <div className="flex-none min-w-[270px] space-y-3">
           <div className="flex justify-between">
             <span className="font-medium text-slate-600 text-xs dark:text-slate-300 uppercase">
-              subtotal:
+              total hors-taxe:
             </span>
             <span className="text-slate-900 dark:text-slate-300">$3601.50</span>
           </div>
           <div className="flex justify-between">
             <span className="font-medium text-slate-600 text-xs dark:text-slate-300 uppercase">
-              vat (3.5%):
+              tva (3.5%):
             </span>
             <span className="text-slate-900 dark:text-slate-300">$20.50</span>
           </div>

@@ -43,7 +43,7 @@ const Detail_facture = ({ params }) => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            to: facture.user.email,
+            to: "beda.dingui@digifaz.com",
             subject: "Facture paiement S.I.Béton",
             html: `<p>Facture N°${facture.id}</p>`,
             file: fichier_base64,
@@ -103,7 +103,7 @@ const Detail_facture = ({ params }) => {
       });
 
       const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("portrait", "mm", "a4");
+      const pdf = new jsPDF("portrait", "mm", "a4",true);
       const pageWidth = 210;
       const pageHeight = 297;
       const imgWidth = pageWidth;
