@@ -188,7 +188,7 @@ const EditTaskModal = () => {
                 </Button>
                 <Button
                   onClick={() => {
-                    router.push(`/factures`);
+                    router.push(`/invoice-add`);
                   }}
                   className=" btn btn-info py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center gap-2"
                 >

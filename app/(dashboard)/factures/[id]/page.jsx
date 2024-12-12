@@ -87,7 +87,7 @@ const Detail_facture = ({ params }) => {
           progress: undefined,
           theme: "dark",
         });
-        console.error("Erreur lors de l'envoi :", error);
+        console.error(`Erreur lors de l'envoi : ${error} `);
       }
     } else {
       console.log("aucune facture trouvee");
