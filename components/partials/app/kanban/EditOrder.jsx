@@ -167,7 +167,7 @@ const EditTaskModal = () => {
               <div className="flex flex-col gap-2  text-sm ">
                 <Button
                   onClick={() => {
-                    router.push(`/invoice`);
+                    router.push(`/factures`);
                   }}
                   className=" btn btn-info  py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center gap-2"
                 >
@@ -188,7 +188,7 @@ const EditTaskModal = () => {
                 </Button>
                 <Button
                   onClick={() => {
-                    router.push(`/invoice`);
+                    router.push(`/factures`);
                   }}
                   className=" btn btn-info py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center gap-2"
                 >

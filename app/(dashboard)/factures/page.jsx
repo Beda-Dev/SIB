@@ -252,7 +252,7 @@ const InvoicePage = () => {
             />
             <Button
               icon="heroicons-outline:plus-sm"
-              text="Add Record"
+              text="creer une facture"
               className=" btn-dark font-normal btn-sm "
               iconClass="text-lg"
               onClick={() => {

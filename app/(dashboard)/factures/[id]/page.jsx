@@ -9,6 +9,7 @@ import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import PrintPdf from "./imprimer_pdf";
 import { toBase64 } from "./convertionBase64";
+import { toast } from "react-toastify";
 
 const Detail_facture = ({ params }) => {
   const { id } = params;
@@ -42,7 +43,7 @@ const Detail_facture = ({ params }) => {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            to: "beda.dingui@digifaz.com",
+            to: facture.user.email,
             subject: "Facture paiement S.I.Béton",
             html: `<p>Facture N°${facture.id}</p>`,
             file: fichier_base64,
@@ -52,13 +53,41 @@ const Detail_facture = ({ params }) => {
 
         const data = await response.json();
         if (response.ok) {
-          alert("Email envoyé avec succès !");
+          toast.success(`Facture N°${facture.id} envoyer avec success au  ${facture.user.email}`, {
+            position: "top-right",
+            autoClose: 3000,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
         } else {
-          alert(`Erreur: ${data.message}`);
+          toast.info(`Erreur: ${data.message}`, {
+            position: "top-right",
+            autoClose: 1500,
+            hideProgressBar: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            draggable: true,
+            progress: undefined,
+            theme: "dark",
+          });
+
         }
       } catch (error) {
+        toast.error("Une erreur est survenue lors de l'envoi de l'email", {
+          position: "top-right",
+          autoClose: 1500,
+          hideProgressBar: false,
+          closeOnClick: true,
+          pauseOnHover: true,
+          draggable: true,
+          progress: undefined,
+          theme: "dark",
+        });
         console.error("Erreur lors de l'envoi :", error);
-        alert("Une erreur est survenue lors de l'envoi de l'email.");
       }
     } else {
       console.log("aucune facture trouvee");
