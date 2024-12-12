@@ -40,6 +40,12 @@ export const menuItems = [
     icon: "lets-icons:order",
     link: "commandes",
   },
+  {
+    title: "Factures",
+    isHide: true,
+    icon: "basil:invoice-outline",
+    link: "factures",
+  },
   
  
   

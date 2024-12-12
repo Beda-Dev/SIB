@@ -2,7 +2,7 @@ import React, { Fragment } from "react";
 import Icon from "@/components/ui/Icon";
 const Select = ({
   label,
-  placeholder = " veillez coisir une categorie",
+  placeholder = " veillez choisir une categorie",
   classLabel = "form-label",
   className = "",
   classGroup = "",

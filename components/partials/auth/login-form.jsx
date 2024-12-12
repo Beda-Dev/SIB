@@ -1,4 +1,3 @@
-
 import Textinput from "@/components/ui/Textinput";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -6,12 +5,15 @@ import * as yup from "yup";
 import { useRouter } from "next/navigation";
 import { useDispatch } from "react-redux";
 import { toast } from "react-toastify";
-import { loginUser } from "./Login"
-import { setUser } from "@/store/userReducer"
+import { loginUser } from "./Login";
+import { setUser } from "@/store/userReducer";
 
 const schema = yup
   .object({
-    email: yup.string().email("Email invalide").required("L'adresse email est requise"),
+    email: yup
+      .string()
+      .email("Email invalide")
+      .required("L'adresse email est requise"),
     password: yup.string().required("Le mot de passe est requis"),
   })
   .required();
@@ -20,29 +22,26 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const router = useRouter();
 
-  const { register, handleSubmit, formState: { errors } } = useForm({
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     resolver: yupResolver(schema),
     mode: "all",
   });
 
-
   const onSubmit = async (data) => {
-
     const result = await loginUser(data.email, data.password);
     if (result.success) {
-        
+      const { token, user } = result.data.data;
+      sessionStorage.setItem("authToken", token);
+      sessionStorage.setItem("userInfo", JSON.stringify(user));
+      sessionStorage.setItem("email", data.email);
 
-        const { token, user } = result.data.data;
-        sessionStorage.setItem("authToken", token); 
-        sessionStorage.setItem("userInfo", JSON.stringify(user));
-        sessionStorage.setItem("email", data.email)
-
-        dispatch(setUser(user));
-        console.log(user)
-    
-        router.push("/produit");
-        toast.success("Connection reussi");
-
+      dispatch(setUser(user));
+      router.push("/produit");
+      toast.success("Connection reussi");
     }
     if (!data.email || !data.password) {
       toast.error("Informations invalides", {
@@ -57,15 +56,9 @@ const LoginForm = () => {
       });
       return;
     }
-
-
-    
-      
-     
   };
 
   return (
-    
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <Textinput
         name="email"
@@ -82,7 +75,9 @@ const LoginForm = () => {
         error={errors?.password}
       />
 
-      <button className="btn btn-warning bg-orange-500 block w-full text-center">Se connecter</button>
+      <button className="btn btn-warning bg-orange-500 block w-full text-center">
+        Se connecter
+      </button>
     </form>
   );
 };

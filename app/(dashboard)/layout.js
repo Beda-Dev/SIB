@@ -61,14 +61,14 @@ export default function RootLayout({ children }) {
   return (
     <div
       dir={isRtl ? "rtl" : "ltr"}
-      className={`app-warp    ${isDark ? "dark" : "light"} ${
+      className={`app-warp  ${isDark ? "dark" : "light"} ${
         skin === "bordered" ? "skin--bordered" : "skin--default"
       }
       ${navbarType === "floating" ? "has-floating" : ""}
       `}
     >
       <ToastContainer />
-      <Header className={width > breakpoints.lg ? switchHeaderClass() : ""} />
+      <Header className={`${width > breakpoints.lg ? switchHeaderClass() : ""} print:hidden `}/>
       {menuType === "vertical" && width > breakpoints.lg && !menuHidden && (
         <Sidebar />
       )}

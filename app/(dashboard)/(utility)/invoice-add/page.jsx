@@ -11,7 +11,7 @@ const InvoiceAddPage = () => {
   const [picker, setPicker] = useState(new Date());
   return (
     <div>
-      <Card title="Create new invoice">
+      <Card title="Creer une nouvelle facture">
         <h4 className="text-slate-900 dark:text-white text-xl mb-4">
           #89572935Kh
         </h4>

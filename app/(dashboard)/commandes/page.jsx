@@ -1,30 +1,29 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import Button from "@/components/ui/Button";
-import Tooltip from "@/components/ui/Tooltip";
-import Icon from "@/components/ui/Icon";
-
+import { setOrder } from "@/store/orderReducer";
 import { useSelector, useDispatch } from "react-redux";
-import OrderCard from "@/components/partials/app/kanban/commandes"; // Remplace "Task" par "OrderCard"
-import { ToastContainer } from "react-toastify";
-import EditTaskModal from "@/components/partials/app/kanban/EditTask";
+import OrderCard from "@/components/partials/app/kanban/commandes";
+import EditTaskModal from "@/components/partials/app/kanban/EditOrder";
 import { getOrder } from "./api_commande";
 
-const KanbanPage = () => {
-  const dispatch = useDispatch();
+const OrderPage = () => {
+  const { editModal, editOrder } = useSelector((state) => state.kanban);
   const [Loading, setLoading] = useState(false);
   const [commandes, setCommandes] = useState([]);
   const [enAttente, setEnAttente] = useState([]);
   const [enTraitement, setEnTraitement] = useState([]);
   const [effectuer, setEffectuer] = useState([]);
   const [annuler, setAnnuler] = useState([]);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const obtentionCommande = async () => {
       try {
         const Data = await getOrder();
-        setCommandes(Data.data?.data || []);
+        if(Data){
+          setCommandes(Data.data?.data || []);
+          dispatch(setOrder(Data.data?.data || []));}
       } catch (error) {
         setError("Erreur lors du chargement des commandes.");
       } finally {
@@ -33,7 +32,7 @@ const KanbanPage = () => {
     };
 
     obtentionCommande();
-  }, []);
+  }, [editOrder]);
 
   useEffect(() => {
     if (commandes.length > 0) {
@@ -50,10 +49,13 @@ const KanbanPage = () => {
           case "En cours de traitement":
             traitement.push(commande);
             break;
-          case "Effectué":
+          case "Effectuée":
+          case "Effectuer":
             effectuees.push(commande);
             break;
+          case "Annulée":
           case "Annuler":
+          case "Annulé":
             annulees.push(commande);
             break;
           default:
@@ -84,13 +86,13 @@ const KanbanPage = () => {
       },
       {
         id: "3",
-        name: "Commande(s) effectuée",
+        name: "Commandes effectuée",
         color: "#00FF00",
         orders: effectuer || [],
       },
       {
         id: "4",
-        name: "Commande(s) Annulée",
+        name: "Commande annulée",
         color: "red",
         orders: annuler || [],
       },
@@ -106,7 +108,7 @@ const KanbanPage = () => {
         </h4>
       </div>
 
-      <div className="flex space-x-6 overflow-hidden overflow-x-auto pb-4 rtl:space-x-reverse">
+      <div className="flex flex-warp space-x-6 overflow-hidden overflow-x-auto pb-4 rtl:space-x-reverse">
         {comm.columns.map((column) => {
           return (
             <div key={column.id} className="w-1/4 flex-none">
@@ -121,35 +123,11 @@ const KanbanPage = () => {
                 <div className="text-lg text-slate-900 dark:text-white font-medium">
                   {column.name}
                 </div>
-                <div className="flex items-center space-x-2 rtl:space-x-reverse">
-                  {/*<Tooltip
-                    placement="top"
-                    arrow
-                    theme="dark"
-                    content="Ajouter une commande"
-                  >
-                    <button
-                      className="border border-slate-200 dark:border-slate-700 dark:text-slate-400 rounded h-6 w-6 flex flex-col items-center justify-center text-base text-slate-600"
-                      onClick={() =>
-                        dispatch(
-                          toggleTaskModal({
-                            open: true,
-                            columnId: column.id,
-                          })
-                        )
-                      }
-                    >
-                      <Icon icon="heroicons-outline:plus-sm" />
-                    </button>
-                  </Tooltip>
-                  */}
-                </div>
               </div>
 
-              {/* Commandes */}
               <div className="px-2 py-4 h-full space-y-4 bg-slate-200 dark:bg-slate-700 rounded">
                 {column.orders?.map((order) => (
-                  <div key={order.id} className="dark:bg-slate-700 ">
+                  <div key={order.id} className="dark:bg-slate-700 rounded">
                     {order && <OrderCard order={order} />}
                   </div>
                 ))}
@@ -164,4 +142,4 @@ const KanbanPage = () => {
   );
 };
 
-export default KanbanPage;
+export default OrderPage;

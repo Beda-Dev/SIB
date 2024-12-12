@@ -65,6 +65,7 @@ const Produits = () => {
       setDescription("");
       setImage([]);
       setPrix(0);
+      router.push("/produit")
   
     } else {
       console.log(result.message)
@@ -97,6 +98,7 @@ const Produits = () => {
               onChange={(e) => setPrix(e.target.value)}
             />
             <Select
+              classNamePrefix="select"
               options={arraydata}
               label="categorie du produit"
               className="w-full"

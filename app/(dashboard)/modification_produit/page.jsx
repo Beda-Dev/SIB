@@ -152,6 +152,7 @@ const FormulaireModificationProduit = () => {
                 onChange={(e) => setPrix(e.target.value)}
               />
               <Select
+                classNamePrefix="select"
                 options={arrayData}
                 label="Catégorie du produit"
                 value={categorie}

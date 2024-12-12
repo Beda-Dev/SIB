@@ -35,16 +35,16 @@ const TotalTable = () => {
             colSpan={3}
             className="bg-slate-50 dark:bg-slate-700 dark:text-slate-300 text-xs  font-medium leading-4 uppercase text-slate-600 ltr:text-left ltr:last:text-right rtl:text-right rtl:last:text-left"
           >
-            <span className="block px-6 py-5 font-semibold">ITEM</span>
+            <span className="block px-6 py-5 font-semibold">PRODUIT</span>
           </th>
           <th className="bg-slate-50 dark:bg-slate-700 dark:text-slate-300 text-xs  font-medium leading-4 uppercase text-slate-600 ltr:text-left ltr:last:text-right rtl:text-right rtl:last:text-left">
-            <span className="block px-6 py-5 font-semibold">QTY</span>
+            <span className="block px-6 py-5 font-semibold">QUANTITE</span>
           </th>
           <th className="bg-slate-50 dark:bg-slate-700 dark:text-slate-300 text-xs  font-medium leading-4 uppercase text-slate-600 ltr:text-left ltr:last:text-right rtl:text-right rtl:last:text-left">
-            <span className="block px-6 py-5 font-semibold">PRICE</span>
+            <span className="block px-6 py-5 font-semibold">PRIX</span>
           </th>
           <th className="bg-slate-50 dark:bg-slate-700 dark:text-slate-300 text-xs  font-medium leading-4 uppercase text-slate-600 ltr:text-left ltr:last:text-right rtl:text-right rtl:last:text-left">
-            <span className="block px-6 py-5 font-semibold">TOTAL</span>
+            <span className="block px-6 py-5 font-semibold">TOTALE</span>
           </th>
         </tr>
         {rows.map((data, index) => (

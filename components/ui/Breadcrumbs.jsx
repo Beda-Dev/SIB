@@ -61,7 +61,7 @@ const Breadcrumbs = () => {
   }, [location, locationName]);
 
   return (
-    <div className="md:mb-6 mb-4 flex space-x-3 rtl:space-x-reverse">
+    <div className="md:mb-6 mb-4 flex space-x-3 rtl:space-x-reverse  print:hidden ">
       <ul className="breadcrumbs">
         <li className="text-primary-500 flex items-center space-x-2">
           <Link href="/analytics" className="text-lg flex items-center space-x-2">

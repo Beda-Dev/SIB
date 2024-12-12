@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Fragment } from "react";
 import SimpleBar from "simplebar-react";
 import { GetProduitById } from "./api_recherche_produit.jsx";
+import { Transition } from "@headlessui/react";
 
 const Voir_produit = ({ id, onChange }) => {
   const [isOpen, setIsOpen] = useState(true);
@@ -71,11 +72,18 @@ const Voir_produit = ({ id, onChange }) => {
         <div className="grid grid-cols-1 gap-8 text-center">
           <section className="space-y-6">
             <div className="flex justify-center items-center">
-              <img
-                src={selectedImage}
-                alt={produit.label}
-                className="w-72 h-72 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
-              />
+              {produit.images.length == 0 ? (
+                <div className="w-72 h-72 rounded-lg object-cover shadow-md text-lg text-center flex items-center justify-center ">
+                  {" "}
+                  aucune image trouvée
+                </div>
+              ) : (
+                <img
+                  src={selectedImage}
+                  alt={produit.label}
+                  className="w-72 h-72 object-cover rounded-lg shadow-md transition-transform duration-300 hover:scale-105"
+                />
+              )}
             </div>
 
             {produit.images?.length > 0 && (
@@ -107,7 +115,7 @@ const Voir_produit = ({ id, onChange }) => {
               </span>
             </p>
             <div className="text-xl font-bold text-gray-800">
-              ${produit.unit_price.toFixed(2)}
+              {produit.unit_price.toFixed(2)} FCFA
               <div className="flex space-x-3">
                 {produit.sizes?.map((size, index) => (
                   <button
@@ -141,29 +149,53 @@ const Voir_produit = ({ id, onChange }) => {
 
   return (
     <div>
-      <div
-        className={`setting-wrapper fixed ltr:right-0 rtl:left-0 top-0 md:w-[400px] w-[300px]
+      <Transition
+        as={Fragment}
+        show={true}
+        enter="transition ease-out duration-300"
+        enterFrom="opacity-0 translate-x-full"
+        enterTo="opacity-100 translate-x-0"
+        leave="transition ease-in duration-200"
+        leaveFrom="opacity-100 translate-x-0"
+        leaveTo="opacity-0 translate-x-full"
+      >
+        <div
+          className={`setting-wrapper fixed ltr:right-0 rtl:left-0 top-0 md:w-[400px] w-[300px]
          bg-white dark:bg-slate-800 h-screen z-[9999] md:pb-6 pb-[100px] shadow-base2
-          dark:shadow-base3 border border-slate-200 dark:border-slate-700 transition-all duration-150
+          dark:shadow-base3 border border-slate-200 dark:border-slate-700 transition-all duration-300 ease-in-out transform
           ${
             isOpen
               ? "translate-x-0 opacity-100 visible"
               : "ltr:translate-x-full rtl:-translate-x-full opacity-0 invisible"
           }`}
+        >
+          {isOpen && (
+            <SimpleBar className="px-6 h-full">
+              <button
+                className="w-6 rounded-full shadow-lg"
+                onClick={handleClose}
+                aria-label="Fermer"
+              >
+                x
+              </button>
+              {id && <VoirProduit />}
+            </SimpleBar>
+          )}
+        </div>
+      </Transition>
+
+      <Transition
+        as={Fragment}
+        show={isOpen}
+        enter="transition-opacity ease-out duration-300"
+        enterFrom="opacity-0"
+        enterTo="opacity-100"
+        leave="transition-opacity ease-in duration-200"
+        leaveFrom="opacity-100"
+        leaveTo="opacity-0"
       >
-        {isOpen && (
-          <SimpleBar className="px-6 h-full">
-            <button
-              className="rounded-full shadow-lg"
-              onClick={handleClose}
-              aria-label="Fermer"
-            >
-              x
-            </button>
-            {id && <VoirProduit />}
-          </SimpleBar>
-        )}
-      </div>
+        <div className="overlay bg-black bg-opacity-50 fixed inset-0 z-[998]"></div>
+      </Transition>
     </div>
   );
 };
