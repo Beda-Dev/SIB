@@ -1,6 +1,6 @@
 {
     "functions": {
-      "api/send_email.js": {
+      "api/send_email/route.js": {
         "maxDuration": 10,
         "memory": 512
       }
