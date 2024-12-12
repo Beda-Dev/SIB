@@ -1,11 +1,27 @@
 import nodemailer from "nodemailer";
 import { NextResponse } from "next/server";
 
+
+export const config = {
+  api: {
+    bodyParser: {
+      sizeLimit: '10mb', // Limite de taille augmentée (ex : 10 Mo)
+    },
+  },
+};
+
 export async function POST(request) {
   try {
 
     const { to, subject, html, file, filename } = await request.json();
 
+    if (!to || !subject || !html || !file) {
+      return NextResponse.json(
+        { message: "Paramètres manquants pour l'envoi de l'email" },
+        { status: 400 }
+      );
+    }
+  
 
     const transporter = nodemailer.createTransport({
       host: "smtp.gmail.com", 
@@ -27,6 +43,7 @@ export async function POST(request) {
           filename: filename || "document.pdf",
           content: file, 
           encoding: "base64",
+          contentType: "application/pdf",
         },
       ],
     };

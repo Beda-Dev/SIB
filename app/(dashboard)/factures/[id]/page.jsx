@@ -87,7 +87,7 @@ const Detail_facture = ({ params }) => {
           progress: undefined,
           theme: "dark",
         });
-        console.error(`Erreur lors de l'envoi : ${error} `);
+        console.log(`Erreur lors de l'envoi : ${error} `);
       }
     } else {
       console.log("aucune facture trouvee");
@@ -98,7 +98,7 @@ const Detail_facture = ({ params }) => {
   const handlePdfAction = async (action) => {
     if (pdfRef.current) {
       const canvas = await html2canvas(pdfRef.current, {
-        scale: 2,
+        scale: 1.5 ,
         useCORS: true,
       });
 
