@@ -1,10 +1,12 @@
 "use client";
+
 import React, { useEffect, useState, useRef } from "react";
 import Card from "@/components/ui/Card";
 import Icon from "@/components/ui/Icon";
 import TotalTable from "@/components/partials/table/TotalTable";
 import userDarkMode from "@/hooks/useDarkMode";
 import { GetInvoiceById } from "../api_facture";
+import axios from "axios"; // Import Axios
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import PrintPdf from "./imprimer_pdf";
@@ -13,29 +15,47 @@ import { toast } from "react-toastify";
 
 const Detail_facture = ({ params }) => {
   const { id } = params;
-  const [facture, SetFacture] = useState([]);
-  const [Loading, setLoading] = useState(false);
-  const [fileName, Setfilename] = useState("document.pdf");
+  const [facture, setFacture] = useState([]);
+  const [product, setProduct] = useState([]);
+  const [loading, setLoading] = useState(false);
+  const [fileName, setFileName] = useState("document.pdf");
   const pdfRef = useRef(null);
   const [isDark] = userDarkMode();
 
   useEffect(() => {
     setLoading(true);
-    const obtentionFactureParID = async () => {
+
+    const fetchFactureDetails = async () => {
       try {
-        const Data = await GetInvoiceById(id);
-        SetFacture(Data.data?.data || []);
+        // Appel pour obtenir la facture
+        console.log("Fetching invoice by ID...");
+        const invoiceResponse = await GetInvoiceById(id);
+        console.log("Invoice data:", invoiceResponse.data);
+
+        const invoiceData = invoiceResponse.data?.data || [];
+        setFacture(invoiceData);
+
+        // Appel pour obtenir les produits associés
+        if (invoiceData && invoiceData.orderId) {
+          console.log("Fetching products for order ID:", invoiceData.orderId);
+          const productResponse = await axios.get(
+            `https://sibeton-api.vercel.app/api/order/${invoiceData.orderId}`
+          );
+          console.log("Product data:", productResponse.data);
+
+          setProduct(productResponse.data?.product || []);
+        }
       } catch (error) {
-        console.log("Erreur lors du chargement des factures.");
+        console.error("Error fetching invoice or products:", error);
+        toast.error("Erreur lors du chargement des factures ou des produits.");
       } finally {
         setLoading(false);
       }
     };
 
-    obtentionFactureParID();
-  }, []);
+    fetchFactureDetails();
+  }, [id]);
 
-  // Fonction pour envoyer le PDF à l'API
   const sendPdfToApi = async (fichier_base64) => {
     if (facture) {
       const toastId = toast.loading("Envoi de la facture en cours...", {
@@ -44,49 +64,37 @@ const Detail_facture = ({ params }) => {
       });
 
       try {
-        const response = await fetch("/api/send_email", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            to: "beda.dingui@digifaz.com",
-            subject: "Facture paiement S.I.Béton",
-            html: `<p>Facture N°${facture.id}</p>`,
-            file: fichier_base64,
-            filename: "facture.pdf",
-          }),
+        console.log("Sending PDF to API...");
+        const response = await axios.post("/api/send_email", {
+          to: facture.user.email,
+          subject: "Facture paiement S.I.Béton",
+          html: `<p>Facture N°${facture.id}</p>`,
+          file: fichier_base64,
+          filename: "facture.pdf",
         });
 
-        const data = await response.json();
-        if (response.ok) {
-          toast.update(toastId, {
-            render: `Facture N°${facture.id} envoyée avec succès à ${facture.user.email}`,
-            type: "success",
-            isLoading: false,
-            autoClose: 3000,
-          });
-        } else {
-          toast.update(toastId, {
-            render: `Erreur: ${data.message}`,
-            type: "error",
-            isLoading: false,
-            autoClose: 3000,
-          });
-        }
+        console.log("Email response:", response.data);
+
+        toast.update(toastId, {
+          render: `Facture N°${facture.id} envoyée avec succès à ${facture.user.email}`,
+          type: "success",
+          isLoading: false,
+          autoClose: 3000,
+        });
       } catch (error) {
+        console.error("Error sending email:", error);
         toast.update(toastId, {
           render: "Une erreur est survenue lors de l'envoi de l'email",
           type: "error",
           isLoading: false,
           autoClose: 3000,
         });
-        console.error(`Erreur lors de l'envoi : ${error}`);
       }
     } else {
       console.log("Aucune facture trouvée");
     }
   };
 
-  // Fonction pour gérer les actions sur le PDF
   const handlePdfAction = async (action) => {
     if (pdfRef.current) {
       const canvas = await html2canvas(pdfRef.current, {
@@ -111,19 +119,19 @@ const Detail_facture = ({ params }) => {
           if (position < imgHeight) pdf.addPage();
         }
       }
-      Setfilename(`Facture N°${facture.id}` || fileName);
+      setFileName(`Facture N°${facture.id}` || fileName);
 
       if (action === "download") {
         pdf.save(fileName);
       } else if (action === "send") {
         const pdfBlob = pdf.output("blob");
-        console.log("le fichier bolb :" + pdfBlob);
+        console.log("PDF blob generated:", pdfBlob);
         const fichier_base64 = await toBase64(pdfBlob);
         if (fichier_base64) {
-          console.log("ENVOIE DU pdf");
+          console.log("Sending PDF to API...");
           await sendPdfToApi(fichier_base64);
         } else {
-          console.log("Erreur de conversion du  fichier_base64");
+          console.log("Erreur de conversion du fichier_base64");
         }
       } else if (action === "print") {
         const pdfBlob_toPrint = pdf.output("blob");
@@ -132,11 +140,11 @@ const Detail_facture = ({ params }) => {
     }
   };
 
-  if (!facture && Loading) {
+  if (loading) {
     return <div className="text-center">Veuillez patienter...</div>;
   }
 
-  if (!facture && !Loading) {
+  if (!facture) {
     return <div className="text-center">Aucune donnée disponible</div>;
   }
 
@@ -244,7 +252,7 @@ const Detail_facture = ({ params }) => {
             </div>
           </div>
           <div className="max-w-[980px] mx-auto shadow-base dark:shadow-none my-8 rounded-md overflow-x-auto">
-            <TotalTable />
+            <TotalTable product={product} />
           </div>
           <div className="py-10 text-center md:text-2xl text-xl font-normal text-slate-600 dark:text-slate-300">
             Merci pour votre achat !

@@ -8,8 +8,7 @@ import Icon from "@/components/ui/Icon";
 import Dropdown from "@/components/ui/Dropdown";
 import Button from "@/components/ui/Button";
 import { useRouter } from "next/navigation";
-import { jsPDF } from "jspdf";
-import html2canvas from "html2canvas";
+
 import {
   useTable,
   useRowSelect,
@@ -232,7 +231,7 @@ const InvoicePage = () => {
           <h6 className="flex-1 md:mb-0 mb-3">Facture</h6>
           <div className="md:flex md:space-x-3 items-center flex-none rtl:space-x-reverse">
             <GlobalFilter filter={globalFilter} setFilter={setGlobalFilter} />
-            <Button
+            {/*<Button
               icon="heroicons-outline:calendar"
               text="Select date"
               className=" btn-outline-secondary dark:border-slate-700  text-slate-600 btn-sm font-normal dark:text-slate-300 "
@@ -244,6 +243,7 @@ const InvoicePage = () => {
               className=" btn-outline-secondary text-slate-600 dark:border-slate-700 dark:text-slate-300 font-normal btn-sm "
               iconClass="text-lg"
             />
+            */}
             <Button
               icon="heroicons-outline:plus-sm"
               text="creer une facture"

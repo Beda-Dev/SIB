@@ -1,11 +1,10 @@
-import React , {useEffect} from "react";
-import Card from "@/components/ui/Card";
+import React, { useEffect } from "react";
 import Textinput from "@/components/ui/Textinput";
 import Icon from "@/components/ui/Icon";
-import Button from "@/components/ui/Button";
 import { useForm, useFieldArray } from "react-hook-form";
 
-const RepeaterProduct = ({ products , onTotalChange}) => {
+const RepeaterProduct = ({ products, onTotalChange }) => {
+  if (!products) return <div> aucun produit lier cette commande </div>;
   const { register, control, handleSubmit, watch } = useForm({
     defaultValues: {
       products: products.map((product) => ({
@@ -98,7 +97,7 @@ const RepeaterProduct = ({ products , onTotalChange}) => {
               </div>
             ))}
           </form>
-          {/* Bouton pour ajouter un nouveau produit */}
+          {/* Bouton pour ajouter un nouveau produit 
           <div className="mt-4">
             <Button
               text="Ajouter un produit"
@@ -109,6 +108,7 @@ const RepeaterProduct = ({ products , onTotalChange}) => {
               }
             />
           </div>
+          */}
 
           {/* Tableau récapitulatif */}
           <div className="mt-6">

@@ -123,7 +123,10 @@ const EditOrderModal = () => {
       className="w-[66%]"
       title="Commande"
       activeModal={editModal}
-      onClose={() => dispatch(toggleEditModal({ editModal: false }))}
+      onClose={() => {
+        setCreate(false);
+        dispatch(toggleEditModal({ editModal: false }));
+      }}
     >
       {" "}
       {create ? (
@@ -196,7 +199,6 @@ const EditOrderModal = () => {
                     </Button>
                     <Button
                       onClick={() => setCreate(true)}
-
                       className=" btn btn-info py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center gap-2"
                     >
                       Enregister une facture
