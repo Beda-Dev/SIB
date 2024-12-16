@@ -68,13 +68,7 @@ const InvoicePage = () => {
         router.push(`/factures/${id}`);
       },
     },
-    {
-      name: "editer",
-      icon: "heroicons:pencil-square",
-      doit: (id) => {
-        router.push("/invoice-edit");
-      },
-    },
+
   ];
   const COLUMNS = [
     {

@@ -38,6 +38,11 @@ const Detail_facture = ({ params }) => {
   // Fonction pour envoyer le PDF à l'API
   const sendPdfToApi = async (fichier_base64) => {
     if (facture) {
+      const toastId = toast.loading("Envoi de la facture en cours...", {
+        position: "top-right",
+        theme: "dark",
+      });
+
       try {
         const response = await fetch("/api/send_email", {
           method: "POST",
@@ -53,44 +58,31 @@ const Detail_facture = ({ params }) => {
 
         const data = await response.json();
         if (response.ok) {
-          toast.success(`Facture N°${facture.id} envoyer avec success au  ${facture.user.email}`, {
-            position: "top-right",
+          toast.update(toastId, {
+            render: `Facture N°${facture.id} envoyée avec succès à ${facture.user.email}`,
+            type: "success",
+            isLoading: false,
             autoClose: 3000,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
           });
         } else {
-          toast.info(`Erreur: ${data.message}`, {
-            position: "top-right",
-            autoClose: 1500,
-            hideProgressBar: false,
-            closeOnClick: true,
-            pauseOnHover: true,
-            draggable: true,
-            progress: undefined,
-            theme: "dark",
+          toast.update(toastId, {
+            render: `Erreur: ${data.message}`,
+            type: "error",
+            isLoading: false,
+            autoClose: 3000,
           });
-
         }
       } catch (error) {
-        toast.error("Une erreur est survenue lors de l'envoi de l'email", {
-          position: "top-right",
-          autoClose: 1500,
-          hideProgressBar: false,
-          closeOnClick: true,
-          pauseOnHover: true,
-          draggable: true,
-          progress: undefined,
-          theme: "dark",
+        toast.update(toastId, {
+          render: "Une erreur est survenue lors de l'envoi de l'email",
+          type: "error",
+          isLoading: false,
+          autoClose: 3000,
         });
-        console.log(`Erreur lors de l'envoi : ${error} `);
+        console.error(`Erreur lors de l'envoi : ${error}`);
       }
     } else {
-      console.log("aucune facture trouvee");
+      console.log("Aucune facture trouvée");
     }
   };
 
@@ -98,12 +90,12 @@ const Detail_facture = ({ params }) => {
   const handlePdfAction = async (action) => {
     if (pdfRef.current) {
       const canvas = await html2canvas(pdfRef.current, {
-        scale: 1.5 ,
+        scale: 1.5,
         useCORS: true,
       });
 
       const imgData = canvas.toDataURL("image/png");
-      const pdf = new jsPDF("portrait", "mm", "a4",true);
+      const pdf = new jsPDF("portrait", "mm", "a4", true);
       const pageWidth = 210;
       const pageHeight = 297;
       const imgWidth = pageWidth;
@@ -119,7 +111,7 @@ const Detail_facture = ({ params }) => {
           if (position < imgHeight) pdf.addPage();
         }
       }
-      Setfilename(`Facture N°${facture.id}` || fileName)
+      Setfilename(`Facture N°${facture.id}` || fileName);
 
       if (action === "download") {
         pdf.save(fileName);
@@ -151,7 +143,7 @@ const Detail_facture = ({ params }) => {
   return (
     <div>
       <div className="lg:flex justify-between flex-wrap items-center mb-6">
-        <h4 className="print:hidden">Facture N°{facture.id}</h4>
+        <h4 className="print:hidden text-sm">Facture N°{facture.id}</h4>
         <div className="flex lg:justify-end items-center flex-wrap space-xy-5 print:hidden">
           <button
             type="button"

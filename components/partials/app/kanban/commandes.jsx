@@ -12,18 +12,18 @@ const OrderCard = ({ order }) => {
   const getColorClass = (status) => {
     switch (status) {
       case "En attente":
-        return "bg-orange-300";
+        return "bg-orange-300 dark:bg-orange-500 bg-opacity-90";
       case "En cours de traitement":
-        return "bg-yellow-300";
+        return "bg-yellow-300 dark:bg-yellow-500 bg-opacity-90";
       case "Effectuée":
       case "Effectuer":
-        return "bg-green-300";
+        return "bg-green-300 dark:bg-green-500 bg-opacity-90";
       case "Annulée":
       case "Annuler":
       case "Annulé":
-        return "bg-red-300";
+        return "bg-red-300 dark:bg-red-500 bg-opacity-90";
       default:
-        return "bg-gray-300";
+        return "bg-gray-300 dark:bg-slate-600 bg-opacity-90";
     }
   };
 
@@ -34,7 +34,7 @@ const OrderCard = ({ order }) => {
   return (
     <Card
       className={classNames(
-        " rounded-lg transition-all",
+        " rounded-xl transition-all",
         colorClass,
         "hover:bg-opacity-80 dark:bg-slate-800 dark:hover:bg-slate-700"
       )}

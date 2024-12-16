@@ -4,7 +4,7 @@ import React, { useEffect, useState } from "react";
 import { setOrder } from "@/store/orderReducer";
 import { useSelector, useDispatch } from "react-redux";
 import OrderCard from "@/components/partials/app/kanban/commandes";
-import EditTaskModal from "@/components/partials/app/kanban/EditOrder";
+import EditOrderModal from "@/components/partials/app/kanban/EditOrder";
 import { getOrder } from "./api_commande";
 
 const OrderPage = () => {
@@ -137,7 +137,7 @@ const OrderPage = () => {
         })}
       </div>
 
-      <EditTaskModal />
+      <EditOrderModal />
     </div>
   );
 };

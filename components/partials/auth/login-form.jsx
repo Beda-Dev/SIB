@@ -1,3 +1,4 @@
+import { useState } from "react";
 import Textinput from "@/components/ui/Textinput";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
@@ -19,6 +20,7 @@ const schema = yup
   .required();
 
 const LoginForm = () => {
+  const [isClicked, setIsClicked] = useState(false)
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -32,6 +34,7 @@ const LoginForm = () => {
   });
 
   const onSubmit = async (data) => {
+    setIsClicked(true)
     const result = await loginUser(data.email, data.password);
     if (result.success) {
       const { token, user } = result.data.data;
@@ -40,6 +43,7 @@ const LoginForm = () => {
       sessionStorage.setItem("email", data.email);
 
       dispatch(setUser(user));
+
       router.push("/produit");
       toast.success("Connection reussi");
     }
@@ -52,10 +56,11 @@ const LoginForm = () => {
         pauseOnHover: true,
         draggable: true,
         progress: undefined,
-        theme: "light",
+        theme: "dark",
       });
       return;
     }
+    setIsClicked(false)
   };
 
   return (
@@ -75,7 +80,9 @@ const LoginForm = () => {
         error={errors?.password}
       />
 
-      <button className="btn btn-warning bg-orange-500 block w-full text-center">
+      <button 
+      disabled={isClicked}
+      className="btn btn-warning bg-orange-500 block w-full text-center active:scale-95 transition-transform duration-200">
         Se connecter
       </button>
     </form>
