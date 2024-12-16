@@ -292,7 +292,7 @@ const InvoicePage = () => {
                       ID de la Facture
                     </InputLabel>
                     <Select
-                    className="h-8"
+                    className="h-12"
                       labelId="invoice-select-label"
                       value={selectedInvoiceId}
                       onChange={(e) => setSelectedInvoiceId(e.target.value)}
