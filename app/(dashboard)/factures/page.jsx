@@ -25,15 +25,14 @@ import {
 } from "react-table";
 import GlobalFilter from "@/components/partials/table/GlobalFilter";
 import { getInvoice } from "./api_facture";
-import { Import } from "lucide-react";
 import InvoiceAddPage from "../(utility)/invoice-add/page";
 
 const InvoicePage = () => {
   const [factures, setFactures] = useState([]);
   const [Loading, setLoading] = useState(false);
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedInvoiceId, setSelectedInvoiceId] = useState("");
-  const [invoiceDetails, setInvoiceDetails] = useState(null);
+  const [selectedOrderId, setSelectedOrderId] = useState("");
+  const [orderDetails, setOrderDetails] = useState(null);
   const [openIvoice, setOpenIvoice] = useState(false);
   const [childUnmounted, setChildUnmounted] = useState(false);
 
@@ -41,7 +40,7 @@ const InvoicePage = () => {
     setChildUnmounted(isUnmounted);
     console.log("Le composant enfant a été démonté : ", isUnmounted);
     setOpenIvoice(false);
-    setInvoiceDetails("");
+    setOrderDetails("");
     setTimeout(() => {
       setChildUnmounted(false);
     }, 1000);
@@ -66,21 +65,21 @@ const InvoicePage = () => {
   const handleInvoiceSelection = async (id) => {
     try {
       const response = await axios.get(
-        `https://sibeton-api.vercel.app/api/invoice/${id}`
+        `https://sibeton-api.vercel.app/api/order/${id}`
       );
-      setInvoiceDetails(response.data.data);
+      setOrderDetails(response.data.data);
       console.log(response.data.data);
       toast.success("Facture récupérée avec succès !");
       setOpenIvoice(true);
     } catch (error) {
-      toast.error("Erreur lors de la récupération de la facture.");
+      toast.error("Erreur lors de la récupération de la commande.");
       console.log(error);
     }
   };
 
   const handleCloseModal = () => {
     setModalOpen(false);
-    setSelectedInvoiceId("");
+    setSelectedOrderId("");
   };
 
   const handleOpenModal = () => {
@@ -246,8 +245,8 @@ const InvoicePage = () => {
 
   return (
     <>
-      {openIvoice && invoiceDetails ? (
-        <InvoiceAddPage order={invoiceDetails} onUnmount={handleChildUnmount} />
+      {openIvoice && orderDetails ? (
+        <InvoiceAddPage order={orderDetails} onUnmount={handleChildUnmount} />
       ) : (
         <Card noborder>
           <div className="md:flex pb-6 items-center">
@@ -289,20 +288,26 @@ const InvoicePage = () => {
                   </h2>
                   <FormControl fullWidth>
                     <InputLabel id="invoice-select-label" className="text-sm ">
-                      ID de la Facture
+                      ID de la Commande
                     </InputLabel>
                     <Select
-                    className="h-12"
+                      className="h-12"
                       labelId="invoice-select-label"
-                      value={selectedInvoiceId}
-                      onChange={(e) => setSelectedInvoiceId(e.target.value)}
+                      value={selectedOrderId}
+                      onChange={(e) => setSelectedOrderId(e.target.value)}
                       label="ID de la Facture"
                     >
-                      {factures.map((facture) => (
-                        <MenuItem key={facture.id} value={facture.id}>
-                          {`Facture #${facture.id}`}
-                        </MenuItem>
-                      ))}
+                      {factures
+                        .filter(
+                          (value, index, self) =>
+                            index ===
+                            self.findIndex((t) => t.order.id === value.order.id)
+                        )
+                        .map((facture) => (
+                          <MenuItem key={facture.id} value={facture.order.id}>
+                            {`Commande #${facture.order.id}`}
+                          </MenuItem>
+                        ))}
                     </Select>
                   </FormControl>
                   <div className="modal-actions w-full flex justify-between gap-10 mt-4">
@@ -315,7 +320,7 @@ const InvoicePage = () => {
                       text="Confirmer"
                       className="btn-dark text-sm px-4 py-2"
                       onClick={() => {
-                        handleInvoiceSelection(selectedInvoiceId);
+                        handleInvoiceSelection(selectedOrderId);
                         handleCloseModal();
                       }}
                     />
