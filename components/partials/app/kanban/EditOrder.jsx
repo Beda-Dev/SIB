@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Select from "react-select";
 import Modal from "@/components/ui/Modal";
 import { useSelector, useDispatch } from "react-redux";
@@ -29,25 +29,6 @@ const getFilteredOptions = (currentStatus) => {
   );
 };
 
-const producte = {
-  id: 1,
-  label: "Fond pour regard de visite en béton",
-  unit_price: 40499,
-  description:
-    "Pour conduite B.A. ou P.V.C\r\nConforme aux normes\r\nEN 1916 NFP 16-346-2",
-  createdAt: "2024-12-05T14:15:52.692Z",
-  updatedAt: "2024-12-10T09:32:55.466Z",
-  categoryId: 2,
-  images: [
-    {
-      id: 46,
-      productId: 1,
-      url: "https://oifoeivdflxzgtj0.public.blob.vercel-storage.com/fond-bombe-removebg-preview-wN74X9W9SXxZLnU0oHM5LX0bR5wORv.png",
-      createdAt: "2024-12-10T09:32:55.466Z",
-      updatedAt: "2024-12-10T09:32:55.466Z",
-    },
-  ],
-};
 
 const ProductCard = ({ product }) => (
   <div className="flex items-start gap-4 p-2 bg-gray-50 rounded-lg">
@@ -79,6 +60,7 @@ const EditOrderModal = () => {
   const router = useRouter();
   const { editModal, editOrder } = useSelector((state) => state.kanban);
   const [create, setCreate] = useState(false);
+  const [childUnmounted, setChildUnmounted] = useState(false);
   const dispatch = useDispatch();
   let filteredOptions = [];
 
@@ -116,6 +98,24 @@ const EditOrderModal = () => {
     dispatch(toggleEditModal({ editModal: false }));
   };
 
+  const handleChildUnmount = (isUnmounted) => {
+    setChildUnmounted(isUnmounted);
+    setCreate(false)
+    console.log("Le composant enfant a été démonté : ", isUnmounted);
+
+    setTimeout(() => {
+      setChildUnmounted(false)
+    },1000);
+  };
+
+  useEffect(()=>{
+    if(childUnmounted){
+
+      dispatch(toggleEditModal({ editModal: false }));
+    }
+
+  },[childUnmounted])
+
   if (!editOrder) return null;
 
   return (
@@ -130,7 +130,7 @@ const EditOrderModal = () => {
     >
       {" "}
       {create ? (
-        <InvoiceAddPage order={editOrder} />
+        <InvoiceAddPage order={editOrder} onUnmount={handleChildUnmount}/>
       ) : (
         <div>
           <div className="max-w-full mx-auto p-6 bg-white rounded-xl">

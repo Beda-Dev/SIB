@@ -1,7 +1,7 @@
 /* eslint-disable react/display-name */
 "use client";
 
-import React, { useState, useMemo, useEffect, useRef  } from "react";
+import React, { useState, useMemo, useEffect, useRef } from "react";
 import { advancedTable } from "@/constant/table-data";
 import Card from "@/components/ui/Card";
 import Icon from "@/components/ui/Icon";
@@ -19,11 +19,9 @@ import {
 import GlobalFilter from "@/components/partials/table/GlobalFilter";
 import { getInvoice } from "./api_facture";
 
-
 const InvoicePage = () => {
   const [factures, setFactures] = useState([]);
   const [Loading, setLoading] = useState(false);
-  
 
   useEffect(() => {
     setLoading(true);
@@ -40,7 +38,6 @@ const InvoicePage = () => {
 
     obtentionFacture();
   }, []);
-  
 
   if (!factures && Loading) {
     return <div className="text-center">Veuillez patienter...</div>;
@@ -53,13 +50,6 @@ const InvoicePage = () => {
   const router = useRouter();
   const actions = [
     {
-      name: "envoyer",
-      icon: "ph:paper-plane-right",
-      doit: () => {
-        router.push("/invoice-add");
-      },
-    },
-    {
       name: "voir",
       icon: "heroicons-outline:eye",
       doit: (id) => {
@@ -67,7 +57,6 @@ const InvoicePage = () => {
         router.push(`/factures/${id}`);
       },
     },
-
   ];
   const COLUMNS = [
     {
@@ -144,39 +133,24 @@ const InvoicePage = () => {
       Cell: (row) => {
         return (
           <div>
-            <Dropdown
-              classMenuItems="right-0 w-[140px] top-[110%] "
-              label={
-                <span className="text-xl text-center block w-full">
-                  <Icon icon="heroicons-outline:dots-vertical" />
-                </span>
-              }
-            >
-              <div className="divide-y divide-slate-100 dark:divide-slate-800">
-                {actions.map((item, i) => (
-                  <div
-                    key={i}
-                    onClick={() => {
-                      item.doit(row.row.original.id);
-                    }}
-                    className={`
-                
-                  ${
-                    item.name === "delete"
-                      ? "bg-danger-500 text-danger-500 bg-opacity-30   hover:bg-opacity-100 hover:text-white"
-                      : "hover:bg-slate-900 hover:text-white dark:hover:bg-slate-600 dark:hover:bg-opacity-50"
-                  }
+            <div className="divide-y divide-slate-100 dark:divide-slate-800 flex">
+              {actions.map((item, i) => (
+                <div
+                  key={i}
+                  onClick={() => {
+                    item.doit(row.row.original.id);
+                  }}
+                  className={`hover:bg-success-500 hover:text-white dark:hover:bg-slate-600 dark:hover:bg-opacity-50
                    w-full border-b border-b-gray-500 border-opacity-10 px-4 py-2 text-sm  last:mb-0 cursor-pointer 
-                   first:rounded-t last:rounded-b flex  space-x-2 items-center rtl:space-x-reverse `}
-                  >
-                    <span className="text-base">
-                      <Icon icon={item.icon} />
-                    </span>
-                    <span>{item.name}</span>
-                  </div>
-                ))}
-              </div>
-            </Dropdown>
+                   first:rounded-t last:rounded-b flex  space-x-2 items-center justify-center rtl:space-x-reverse `}
+                >
+                  <span className="text-base">
+                    <Icon icon={item.icon} />
+                  </span>
+                  <span>{item.name}</span>
+                </div>
+              ))}
+            </div>
           </div>
         );
       },
@@ -198,9 +172,7 @@ const InvoicePage = () => {
     useRowSelect,
 
     (hooks) => {
-      hooks.visibleColumns.push((columns) => [
-        ...columns,
-      ]);
+      hooks.visibleColumns.push((columns) => [...columns]);
     }
   );
   const {
