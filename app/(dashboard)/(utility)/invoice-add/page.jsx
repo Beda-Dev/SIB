@@ -75,7 +75,7 @@ const InvoiceAddPage = ({ order, onUnmount }) => {
     console.log("Debut");
     try {
       const payload = {
-        status: order.status,
+        status: "paid",
         amount: total,
         userId: order.user.id,
         orderId: order.id,
