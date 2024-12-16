@@ -144,15 +144,6 @@ const InvoiceAddPage = ({ order }) => {
       <Card title="Enregistrer une nouvelle facture">
         <SupplierInfo />
         <CustomerInfo user={order.user} />
-        <select
-        className="w-full py-4 border my-3 rounded-lg bg-slate"
-          value={paymentMode}
-          placeholder="Mode d paiement"
-          onChange={(e) => setPaymentMode(e.target.value)}
-        >
-          <option value="En une seule fois">En une seule fois</option>
-          <option value="Échelonné">Échelonné</option>
-        </select>
         <RepeaterProduct products={products} onTotalChange={handleTotalChange} />
         <Textinput label="Montant payé" type="number" className="my-2" />
         <div className="text-right space-x-3">
