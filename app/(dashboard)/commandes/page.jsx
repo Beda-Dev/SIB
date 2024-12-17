@@ -42,7 +42,7 @@ const OrderPage = () => {
       const annulees = [];
 
       commandes.forEach((commande) => {
-        switch (commande.status) {
+        switch (commande.status.toUpperCase()) {
           case "PENDING":
             attente.push(commande);
             break;

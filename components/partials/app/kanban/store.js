@@ -49,7 +49,7 @@ export const updateOrder = (order) => async (dispatch) => {
       });
 
       // Vérification : création de facture uniquement si la commande est "DONE"
-      if (order.status === "DONE") {
+      if (order.status.toUpperCase() === "DONE") {
         try { 
           console.log(
             "Début de la création de la facture pour la commande terminée :",
@@ -87,9 +87,11 @@ export const updateOrder = (order) => async (dispatch) => {
             theme: "dark",
           });
         }
+      } else{
+        window.location.reload();
       }
 
-      //window.location.reload();
+      
     }
   } catch (error) {
     console.error("Erreur lors de la mise à jour de la commande :", error);

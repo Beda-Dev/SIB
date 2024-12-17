@@ -29,7 +29,7 @@ const getFilteredOptions = (currentStatus) => {
 
 
   return statusOptions.filter((option) =>
-    allowedStatuses[currentStatus]?.includes(option.label)
+    allowedStatuses[currentStatus.toUpperCase()]?.includes(option.label)
   );
 };
 

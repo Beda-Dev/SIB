@@ -15,10 +15,9 @@ const OrderCard = ({ order }) => {
     PROGRESS: "bg-yellow-300 dark:bg-yellow-500 bg-opacity-90",
     DONE: "bg-green-300 dark:bg-green-500 bg-opacity-90",
     CANCELED: "bg-red-300 dark:bg-red-500 bg-opacity-90",
-    DEFAULT: "bg-gray-300 dark:bg-slate-600 bg-opacity-90",
   };
 
-  const colorClass = statusColors[status] || statusColors.DEFAULT;
+  const colorClass = statusColors[status.toUpperCase()] || statusColors.DEFAULT;
   const dispatch = useDispatch();
 
   return (
