@@ -151,7 +151,7 @@ const InvoicePage = () => {
           <span className="block w-full">
             <span
               className={` inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 ${
-                row?.cell?.value === "paid"
+                row?.cell?.value === "DONE"
                   ? "text-success-500 bg-success-500"
                   : ""
               } 

@@ -43,19 +43,16 @@ const OrderPage = () => {
 
       commandes.forEach((commande) => {
         switch (commande.status) {
-          case "En attente":
+          case "PENDING":
             attente.push(commande);
             break;
-          case "En cours de traitement":
+          case "PROGRESS":
             traitement.push(commande);
             break;
-          case "Effectuée":
-          case "Effectuer":
+          case "DONE":
             effectuees.push(commande);
             break;
-          case "Annulée":
-          case "Annuler":
-          case "Annulé":
+          case "CANCELED":
             annulees.push(commande);
             break;
           default:

@@ -1,60 +1,51 @@
-const products = [
-  {
-    img: "/assets/images/all-img/p-1.png",
-    price: "$150.00",
-    title: "Car engine oil",
-  },
-  {
-    img: "/assets/images/all-img/p-2.png",
-    price: "$150.00",
-    title: "Car engine oil",
-  },
-  {
-    img: "/assets/images/all-img/p-3.png",
-    price: "$150.00",
-    title: "Car engine oil",
-  },
-  {
-    img: "/assets/images/all-img/p-4.png",
-    price: "$150.00",
-    title: "Car engine oil",
-  },
-  {
-    img: "/assets/images/all-img/p-5.png",
-    price: "$150.00",
-    title: "Car engine oil",
-  },
-  {
-    img: "/assets/images/all-img/p-6.png",
-    price: "$150.00",
-    title: "Car engine oil",
-  },
-];
-const Products = () => {
+import React from "react";
+
+const Products = ({ products = [] }) => {
   return (
-    <div className="grid md:grid-cols-3 grid-cols-1 gap-5">
-      {products.map((item, i) => (
-        <div
-          key={i}
-          className="bg-slate-50 dark:bg-slate-900 p-4 rounded text-center"
-        >
-          <div className="h-12 w-12 rounded-full mb-4 mx-auto">
-            <img src={item.img} alt="" className="w-full h-full rounded-full" />
-          </div>
-          <span className="text-slate-500 dark:text-slate-300 text-sm mb-1 block font-normal">
-            {item.price}
-          </span>
-          <span className="text-slate-600 dark:text-slate-300 text-sm mb-4 block">
-            {item.title}
-          </span>
-          <a
-            href="#"
-            className="btn btn-secondary dark:bg-slate-800 dark:hover:bg-slate-600 block w-full text-center btn-sm"
-          >
-            View More
-          </a>
-        </div>
-      ))}
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mb-8">
+      {products.map((item, index) => {
+        const {
+          product: { label, unit_price, images, description } = {},
+          quantity,
+        } = item;
+        const imageUrl = images?.[0]?.url || "/placeholder.svg"; // Utilisation d'un placeholder par défaut
+        const price = (unit_price || 0).toLocaleString("fr-FR", {
+          style: "currency",
+          currency: "XOF",
+        });
+
+        return (
+          <>
+            <div
+              key={item.id || index}
+              className="flex flex-col p-4 bg-gray-50 rounded-lg shadow-sm"
+            >
+              {/* Image du produit */}
+              <div className="h-32 w-full relative bg-white p-2 rounded-lg mb-4">
+                <img
+                  src={imageUrl}
+                  alt={`Image de ${label}`}
+                  className="object-contain w-full h-full"
+                />
+              </div>
+              {/* Détails du produit */}
+              <div className="flex-1">
+                <h3 className="text-lg font-medium mb-2">{label}</h3>
+                <p className="text-gray-600 text-sm mb-2">
+                  {description || "Description non disponible"}
+                </p>
+              </div>
+              {/* Prix et quantité */}
+              <div className="text-right">
+                <div className="text-lg font-medium">{price}</div>
+                <div className="text-gray-600 text-sm mt-1">
+                  Quantité: {quantity}
+                </div>
+              </div>
+            </div>
+          </>
+        );
+      })}
     </div>
   );
 };

@@ -6,7 +6,7 @@ import Icon from "@/components/ui/Icon";
 import TotalTable from "@/components/partials/table/TotalTable";
 import userDarkMode from "@/hooks/useDarkMode";
 import { GetInvoiceById } from "../api_facture";
-import axios from "axios"; // Import Axios
+import axios from "axios"; 
 import html2canvas from "html2canvas";
 import { jsPDF } from "jspdf";
 import PrintPdf from "./imprimer_pdf";
@@ -21,29 +21,24 @@ const Detail_facture = ({ params }) => {
   const [fileName, setFileName] = useState("document.pdf");
   const pdfRef = useRef(null);
   const [isDark] = userDarkMode();
+  
 
   useEffect(() => {
     setLoading(true);
 
     const fetchFactureDetails = async () => {
       try {
-        // Appel pour obtenir la facture
-        console.log("Fetching invoice by ID...");
         const invoiceResponse = await GetInvoiceById(id);
-        console.log("Invoice data:", invoiceResponse.data);
-
         const invoiceData = invoiceResponse.data?.data || [];
+        console.log( invoiceResponse.data?.data.user.email)
         setFacture(invoiceData);
 
-        // Appel pour obtenir les produits associés
         if (invoiceData && invoiceData.orderId) {
           console.log("Fetching products for order ID:", invoiceData.orderId);
           const productResponse = await axios.get(
             `https://sibeton-api.vercel.app/api/order/${invoiceData.orderId}`
           );
-          console.log("Product data:", productResponse.data);
-
-          setProduct(productResponse.data?.product || []);
+          setProduct(productResponse.data.data.products || []);
         }
       } catch (error) {
         console.error("Error fetching invoice or products:", error);
@@ -56,6 +51,29 @@ const Detail_facture = ({ params }) => {
     fetchFactureDetails();
   }, [id]);
 
+  useEffect(() => {
+    if (!loading) {
+
+      const invoiceId = JSON.parse(sessionStorage.getItem("invoiceId"));
+      console.log(invoiceId , id)
+      
+
+      if (invoiceId) {
+        
+        if ( Number(invoiceId) === Number(id)) {
+          setTimeout(() => {
+            handlePdfAction("send");
+          }, 1000);
+          
+          sessionStorage.removeItem("invoiceId"); 
+        } else {
+          sessionStorage.removeItem("invoiceId"); 
+        }
+      }
+    }
+  }, [id, loading]);
+  
+  
   const sendPdfToApi = async (fichier_base64) => {
     if (facture) {
       const toastId = toast.loading("Envoi de la facture en cours...", {
@@ -65,12 +83,13 @@ const Detail_facture = ({ params }) => {
 
       try {
         console.log("Sending PDF to API...");
+        console.log(facture.user.email);
         const response = await axios.post("/api/send_email", {
           to: facture.user.email,
           subject: "Facture paiement S.I.Béton",
           html: `<p>Facture N°${facture.id}</p>`,
           file: fichier_base64,
-          filename: "facture.pdf",
+          filename: fileName,
         });
 
         console.log("Email response:", response.data);

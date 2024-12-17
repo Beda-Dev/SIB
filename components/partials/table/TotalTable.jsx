@@ -1,8 +1,8 @@
 import React from "react";
 
 const TotalTable = ({ product = [] }) => {
-
-  const totalHT = product.reduce((acc, item) => acc + (item.unit_price || 0), 0);
+  // Calcul des totaux
+  const totalHT = product.reduce((acc, item) => acc + (item.product.unit_price || 0) * (item.quantity || 0), 0);
   const tva = totalHT * 0.035;
   const totalTTC = totalHT + tva;
   const acomptesRecus = totalTTC;
@@ -20,14 +20,18 @@ const TotalTable = ({ product = [] }) => {
         </thead>
         <tbody>
           {product.length > 0 ? (
-            product.map((item, index) => (
-              <tr key={item.id || index} className="border-b border-slate-100 dark:border-slate-700">
-                <td className="px-6 py-4 text-slate-900 dark:text-slate-300 text-sm">{item.label}</td>
-                <td className="px-6 py-4 text-slate-900 dark:text-slate-300 text-sm">{(item.unit_price || 0).toFixed(2)} FCFA</td>
-                <td className="px-6 py-4 text-slate-900 dark:text-slate-300 text-sm">1</td>
-                <td className="px-6 py-4 text-slate-900 dark:text-slate-300 text-sm">{(item.unit_price || 0).toFixed(2)} FCFA</td>
-              </tr>
-            ))
+            product.map((item, index) => {
+              const { product: { label, unit_price } = {}, quantity } = item;
+              const totalProduct = (unit_price || 0) * (quantity || 0);
+              return (
+                <tr key={item.id || index} className="border-b border-slate-100 dark:border-slate-700">
+                  <td className="px-6 py-4 text-slate-900 dark:text-slate-300 text-sm">{label}</td>
+                  <td className="px-6 py-4 text-slate-900 dark:text-slate-300 text-sm">{(unit_price || 0).toFixed(2)} FCFA</td>
+                  <td className="px-6 py-4 text-slate-900 dark:text-slate-300 text-sm">{quantity}</td>
+                  <td className="px-6 py-4 text-slate-900 dark:text-slate-300 text-sm">{totalProduct.toFixed(2)} FCFA</td>
+                </tr>
+              );
+            })
           ) : (
             <tr>
               <td colSpan={4} className="px-6 py-4 text-center text-slate-500 dark:text-slate-300">Aucun produit disponible</td>
@@ -55,7 +59,6 @@ const TotalTable = ({ product = [] }) => {
             <span className="font-medium text-slate-600 text-xs dark:text-slate-300 uppercase">Acomptes reçus :</span>
             <span className="text-slate-900 dark:text-slate-300 font-bold">{acomptesRecus.toFixed(2)} FCFA</span>
           </div>
-
         </div>
       </div>
     </div>
