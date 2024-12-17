@@ -65,6 +65,7 @@ const EditOrderModal = () => {
   let filteredOptions = [];
 
   if (editOrder) {
+    console.log(editOrder)
     filteredOptions = getFilteredOptions(editOrder.status);
   } else {
     filteredOptions = [];
@@ -94,8 +95,8 @@ const EditOrderModal = () => {
         status: data.tags.value,
       })
     );
-
     dispatch(toggleEditModal({ editModal: false }));
+
   };
 
   const handleChildUnmount = (isUnmounted) => {
@@ -182,7 +183,7 @@ const EditOrderModal = () => {
                       }}
                       className=" btn btn-info  py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center gap-2"
                     >
-                      voir les factures
+                      voir la factures
                       <svg
                         className="w-4 h-4"
                         fill="none"
@@ -197,6 +198,8 @@ const EditOrderModal = () => {
                         />
                       </svg>
                     </Button>
+                    {/*
+                   
                     <Button
                       onClick={() => setCreate(true)}
                       className=" btn btn-info py-1 bg-blue-500 text-white rounded-lg hover:bg-blue-600 flex items-center gap-2"
@@ -216,6 +219,7 @@ const EditOrderModal = () => {
                         />
                       </svg>
                     </Button>
+                     */}
                   </div>
                 )}
               </div>

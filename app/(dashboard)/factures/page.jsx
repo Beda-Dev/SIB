@@ -265,7 +265,7 @@ const InvoicePage = () => {
             className=" btn-outline-secondary text-slate-600 dark:border-slate-700 dark:text-slate-300 font-normal btn-sm "
             iconClass="text-lg"
           />
-          */}
+          
               <Button
                 icon="heroicons-outline:plus-sm"
                 text="enregistrer une facture"
@@ -273,6 +273,7 @@ const InvoicePage = () => {
                 iconClass="text-lg"
                 onClick={handleOpenModal}
               />
+              */}
             </div>
           </div>
           <Modal
