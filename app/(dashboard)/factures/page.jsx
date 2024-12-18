@@ -2,7 +2,6 @@
 "use client";
 
 import React, { useState, useMemo, useEffect, useRef } from "react";
-import { advancedTable } from "@/constant/table-data";
 import Card from "@/components/ui/Card";
 import Icon from "@/components/ui/Icon";
 import Button from "@/components/ui/Button";
@@ -26,6 +25,7 @@ import {
 import GlobalFilter from "@/components/partials/table/GlobalFilter";
 import { getInvoice } from "./api_facture";
 import InvoiceAddPage from "../(utility)/invoice-add/page";
+import { traduction } from "@/constant/traduction";
 
 const InvoicePage = () => {
   const [factures, setFactures] = useState([]);
@@ -151,24 +151,15 @@ const InvoicePage = () => {
           <span className="block w-full">
             <span
               className={` inline-block px-3 min-w-[90px] text-center mx-auto py-1 rounded-[999px] bg-opacity-25 ${
-                row?.cell?.value === "DONE"
+                row?.cell?.value
                   ? "text-success-500 bg-success-500"
                   : ""
               } 
-            ${
-              row?.cell?.value === "unpaid"
-                ? "text-warning-500 bg-warning-500"
-                : ""
-            }
-            ${
-              row?.cell?.value === "pending"
-                ? "text-danger-500 bg-danger-500"
-                : ""
-            }
+
             
              `}
             >
-              {row?.cell?.value}
+              {traduction(row?.cell?.value) || row?.cell?.value}
             </span>
           </span>
         );

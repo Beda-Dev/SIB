@@ -1,4 +1,4 @@
-import React, { useEffect, useState , useRef } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import Select from "react-select";
 import Modal from "@/components/ui/Modal";
 import { useSelector, useDispatch } from "react-redux";
@@ -9,7 +9,7 @@ import { updateOrder, toggleEditModal } from "./store";
 import Button from "@/components/ui/Button";
 import { useRouter } from "next/navigation";
 import InvoiceAddPage from "@/app/(dashboard)/(utility)/invoice-add/page";
-import Products from "@/components/partials/widget/products"
+import Products from "@/components/partials/widget/products";
 import { traduction } from "@/constant/traduction";
 
 const statusOptions = [
@@ -27,7 +27,6 @@ const getFilteredOptions = (currentStatus) => {
     CANCELED: [],
   };
 
-
   return statusOptions.filter((option) =>
     allowedStatuses[currentStatus.toUpperCase()]?.includes(option.label)
   );
@@ -35,14 +34,16 @@ const getFilteredOptions = (currentStatus) => {
 
 const EditOrderModal = () => {
   const router = useRouter();
-  const { editModal, editOrder , invoiceId } = useSelector((state) => state.kanban);
+  const { editModal, editOrder, invoiceId } = useSelector(
+    (state) => state.kanban
+  );
   const [create, setCreate] = useState(false);
   const [childUnmounted, setChildUnmounted] = useState(false);
   const invoiceIdRef = useRef(invoiceId);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    invoiceIdRef.current = invoiceId; 
+    invoiceIdRef.current = invoiceId;
   }, [invoiceId]);
   let filteredOptions = [];
 
@@ -79,22 +80,20 @@ const EditOrderModal = () => {
     );
     dispatch(toggleEditModal({ editModal: false }));
 
-    if(data.tags.value === "DONE"){
-
-    setTimeout(() => {
-      console.log(invoiceIdRef.current)
-      try {
-        if (invoiceIdRef.current) {
-          router.push(`/factures/${invoiceIdRef.current}`);
-        } else {
-          console.error("Aucune facture associée trouvée.");
+    if (data.tags.value === "DONE") {
+      setTimeout(() => {
+        console.log(invoiceIdRef.current);
+        try {
+          if (invoiceIdRef.current) {
+            router.push(`/factures/${invoiceIdRef.current}`);
+          } else {
+            console.error("Aucune facture associée trouvée.");
+          }
+        } catch (error) {
+          console.error("Erreur lors de l'accès à l'ID de facture :", error);
         }
-      } catch (error) {
-        console.error("Erreur lors de l'accès à l'ID de facture :", error);
-      }
-    }, 1000);
-
-  }
+      }, 1000);
+    }
   };
 
   const handleChildUnmount = (isUnmounted) => {
@@ -117,7 +116,7 @@ const EditOrderModal = () => {
 
   return (
     <Modal
-      className="w-[66%]"
+      className="w-[66%] max-w-[66%]"
       title="Commande"
       activeModal={editModal}
       onClose={() => {
@@ -132,11 +131,10 @@ const EditOrderModal = () => {
           <div className="max-w-full mx-auto p-6 bg-white rounded-xl">
             <div className="flex justify-between items-start mb-8">
               <div>
-              <div className="flex items-center gap-8">
+                <div className="flex items-center gap-8">
                   <div className="text-gray-600 mb-4">
                     Date de commande :
                     <span className="text-gray-900 ">
-                      {" "}
                       {new Date(editOrder?.createdAt).toLocaleDateString()}
                     </span>
                   </div>
@@ -157,6 +155,12 @@ const EditOrderModal = () => {
                     dernière mise à jour{" "}
                     {new Date(editOrder?.updatedAt).toLocaleDateString()}
                   </div>
+                  <div className="flex gap-6 justify-end">
+                  {editOrder?.status.toUpperCase() === "DONE" && (
+                    <div className="flex flex-col gap-2 text-sm">
+                    </div>
+                  )}
+                </div>
                 </div>
                 <div>
                   Client : {editOrder?.user.firstName}{" "}
@@ -165,9 +169,12 @@ const EditOrderModal = () => {
                 <div className="my-2">
                   Statut : {traduction(editOrder?.status)}
                 </div>
+                
                 <div>
-                <h1 className="mb-3 text-sm">Produits</h1>
-                <Products products={editOrder?.products}/>
+                  {editOrder?.products?.length > 0 && (
+                    <h1 className="mb-3 text-lg">Produits</h1>
+                  )}
+                  <Products products={editOrder?.products} />
                 </div>
               </div>
             </div>
@@ -184,10 +191,10 @@ const EditOrderModal = () => {
                     <Select
                       {...field}
                       options={filteredOptions}
-                      className=""
+                      className="select"
                       classNamePrefix="select"
-                      getOptionLabel={(e) => e.label} // Affiche les labels (français)
-                      getOptionValue={(e) => e.value} // Envoie les valeurs (anglais)
+                      getOptionLabel={(e) => e.label}
+                      getOptionValue={(e) => e.value}
                     />
                   )}
                 />
