@@ -5,6 +5,7 @@ import axios from "axios";
 const initialState = {
   editModal: false,
   editOrder: null,
+  invoiceId: null
 };
 
 const kanbanSlice = createSlice({
@@ -21,16 +22,20 @@ const kanbanSlice = createSlice({
         state.editOrder.status = status;
       }
     },
+    setInvoiceId: (state, action) => {
+      state.invoiceId = action.payload;
+    },
+
   },
 });
 
-export const { toggleEditModal, updateOrderSuccess } = kanbanSlice.actions;
+export const { toggleEditModal, updateOrderSuccess , setInvoiceId } = kanbanSlice.actions;
 
 export const updateOrder = (order) => async (dispatch) => {
   try {
     console.log("Début de la mise à jour de la commande avec l'ID :", order.id);
 
-    // Appel PUT pour mettre à jour la commande
+
     const response = await axios.put(
       `https://sibeton-api.vercel.app/api/order/${order.id}`,
       {
@@ -68,10 +73,8 @@ export const updateOrder = (order) => async (dispatch) => {
 
           if (invoiceResponse.status === 201) {
             console.log("Facture créée avec succès :", invoiceResponse.data.data.id);
-            sessionStorage.setItem(
-              "invoiceId",
-              invoiceResponse.data.data.id
-            ); // Stockage de l'ID dans le session storage
+            
+            dispatch(setInvoiceId(invoiceResponse.data.data.id));
 
             toast.success("Facture créée avec succès", {
               position: "top-right",

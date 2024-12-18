@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState , useRef } from "react";
 import Select from "react-select";
 import Modal from "@/components/ui/Modal";
 import { useSelector, useDispatch } from "react-redux";
@@ -35,10 +35,15 @@ const getFilteredOptions = (currentStatus) => {
 
 const EditOrderModal = () => {
   const router = useRouter();
-  const { editModal, editOrder } = useSelector((state) => state.kanban);
+  const { editModal, editOrder , invoiceId } = useSelector((state) => state.kanban);
   const [create, setCreate] = useState(false);
   const [childUnmounted, setChildUnmounted] = useState(false);
+  const invoiceIdRef = useRef(invoiceId);
   const dispatch = useDispatch();
+
+  useEffect(() => {
+    invoiceIdRef.current = invoiceId; 
+  }, [invoiceId]);
   let filteredOptions = [];
 
   if (editOrder) {
@@ -77,10 +82,10 @@ const EditOrderModal = () => {
     if(data.tags.value === "DONE"){
 
     setTimeout(() => {
+      console.log(invoiceIdRef.current)
       try {
-        const invoiceId = JSON.parse(sessionStorage.getItem("invoiceId"));
-        if (invoiceId) {
-          router.push(`/factures/${invoiceId}`);
+        if (invoiceIdRef.current) {
+          router.push(`/factures/${invoiceIdRef.current}`);
         } else {
           console.error("Aucune facture associée trouvée.");
         }
