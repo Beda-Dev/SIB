@@ -38,15 +38,23 @@ const LoginForm = () => {
     const result = await loginUser(data.email, data.password);
     if (result.success) {
       const { token, user } = result.data.data;
-      sessionStorage.setItem("authToken", token);
-      sessionStorage.setItem("userInfo", JSON.stringify(user));
-      sessionStorage.setItem("email", data.email);
 
-      dispatch(setUser(user));
 
-      router.push("/produit");
-      toast.success("Connection reussi");
+      if (user.role.toUpperCase() === "ADMIN") {
+ 
+        sessionStorage.setItem("authToken", token);
+        sessionStorage.setItem("userInfo", JSON.stringify(user));
+        sessionStorage.setItem("email", data.email);
+
+        dispatch(setUser(user));
+        router.push("/produit");
+        toast.success("Connexion réussie");
+      }
+    } else {
+      toast.error("Informations de connexion incorrectes.");
     }
+
+
     if (!data.email || !data.password) {
       toast.error("Informations invalides", {
         position: "top-right",

@@ -13,8 +13,6 @@ export const loginUser = async (email, password) => {
     const data = await response.json();
 
     if (response.ok) {
-      console.info(data)
-  
       return { success: true, data };
     } else {
       return { success: false, message: data.message || "Erreur de connexion" };

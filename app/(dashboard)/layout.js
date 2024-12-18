@@ -36,9 +36,19 @@ export default function RootLayout({ children }) {
   const { isAuth } = useSelector((state) => state.auth);
 
   useEffect(() => {
+   
+    const token = sessionStorage.getItem("authToken");
+    const userInfo = sessionStorage.getItem("userInfo");
+    const email = sessionStorage.getItem("email");
 
-    //darkMode;
-  }, [isAuth]);
+
+    if (!token || !userInfo || !email) {
+      router.push("/");
+    }
+  }, [router]);
+
+
+
   const location = usePathname();
   // header switch class
   const switchHeaderClass = () => {
