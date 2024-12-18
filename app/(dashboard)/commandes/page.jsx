@@ -17,22 +17,33 @@ const OrderPage = () => {
   const [annuler, setAnnuler] = useState([]);
   const dispatch = useDispatch();
 
+  const obtentionCommande = async () => {
+    try {
+      const Data = await getOrder();
+      if(Data){
+        setCommandes(Data.data?.data || []);
+        dispatch(setOrder(Data.data?.data || []));}
+    } catch (error) {
+      setError("Erreur lors du chargement des commandes.");
+    } finally {
+      setLoading(false);
+    }
+  };
+  
   useEffect(() => {
-    const obtentionCommande = async () => {
-      try {
-        const Data = await getOrder();
-        if(Data){
-          setCommandes(Data.data?.data || []);
-          dispatch(setOrder(Data.data?.data || []));}
-      } catch (error) {
-        setError("Erreur lors du chargement des commandes.");
-      } finally {
-        setLoading(false);
-      }
-    };
+
 
     obtentionCommande();
-  }, [editOrder]);
+
+    const intervalId = setInterval(() => {
+      obtentionCommande();
+      console.log("encore")
+    }, 30000);
+
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, []);
 
   useEffect(() => {
     if (commandes.length > 0) {

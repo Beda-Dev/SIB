@@ -16,7 +16,9 @@ const Breadcrumbs = () => {
   const [analyticsTitle, setAnalyticsTitle] = useState(""); // Titre dynamique
 
   useEffect(() => {
-    const currentMenuItem = menuItems.find((item) => item.link === locationName);
+    const currentMenuItem = menuItems.find(
+      (item) => item.link === locationName
+    );
 
     const currentChild = menuItems.find((item) =>
       item.child?.find((child) => child.childlink === locationName)
@@ -39,7 +41,7 @@ const Breadcrumbs = () => {
       } else if (relevantHeadr.title === "Page") {
         setAnalyticsIcon("foundation:page-filled");
         setAnalyticsTitle("Pages");
-      }  else {
+      } else {
         setAnalyticsIcon("heroicons-outline:home"); // Icône par défaut
         setAnalyticsTitle(relevantHeadr.title || "Accueil");
       }
@@ -57,6 +59,22 @@ const Breadcrumbs = () => {
         currentChild.child.find((child) => child.childlink === locationName)
           ?.title || ""
       );
+    } else { 
+      const urlParts = location.split("/"); // Divise l'URL en parties
+      const urlSegments = urlParts.filter(Boolean); // Enlève les parties vides
+
+      let dynamicTitle = urlSegments[0] || "Page inconnue"; // Premier segment de l'URL
+
+      if (urlSegments.length > 1) {
+        // Si un deuxième segment existe, on l'ajoute après un tiret
+        dynamicTitle += ` > ${urlSegments[1]}`;
+      }
+
+      if (urlSegments.length > 2) {
+        dynamicTitle += ` > ${urlSegments[2]}`;
+      }
+
+      setPageTitle(dynamicTitle);
     }
   }, [location, locationName]);
 
@@ -64,7 +82,10 @@ const Breadcrumbs = () => {
     <div className="md:mb-6 mb-4 flex space-x-3 rtl:space-x-reverse  print:hidden ">
       <ul className="breadcrumbs">
         <li className="text-primary-500 flex items-center space-x-2">
-          <Link href="/analytics" className="text-lg flex items-center space-x-2">
+          <Link
+            href="/analytics"
+            className="text-lg flex items-center space-x-2"
+          >
             <Icon icon={analyticsIcon} />
             <span>{analyticsTitle}</span>
           </Link>
