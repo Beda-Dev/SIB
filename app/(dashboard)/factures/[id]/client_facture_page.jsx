@@ -24,7 +24,7 @@ const Detail_facture = ({ facture, products }) => {
 
   useEffect(() => {
     console.log(`invoiceId ${invoiceId} facture.id ${facture.id}`);
-    if (Number(invoiceId) === Number(facture.id)) {
+    if (Number(invoiceId)) {
       console.log("milieu");
       handlePdfAction("send");
       dispatch(setInvoiceId(reset))
